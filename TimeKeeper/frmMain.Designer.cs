@@ -137,7 +137,7 @@
             this.toolStripSeparator1,
             this.dailyTaskReportToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.reportsToolStripMenuItem.Text = "Reports";
             // 
             // reportToolStripMenuItem
@@ -172,7 +172,7 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // settingsToolStripMenuItem
             // 
@@ -188,6 +188,7 @@
             this.jiraLoginSettingsToolStripMenuItem.Name = "jiraLoginSettingsToolStripMenuItem";
             this.jiraLoginSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.jiraLoginSettingsToolStripMenuItem.Text = "Jira Login";
+            this.jiraLoginSettingsToolStripMenuItem.Click += new System.EventHandler(this.jiraLoginSettingsToolStripMenuItem_Click);
             // 
             // settingsFileLocationToolStripMenuItem
             // 
@@ -199,12 +200,12 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
