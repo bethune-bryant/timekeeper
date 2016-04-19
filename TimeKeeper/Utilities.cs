@@ -53,7 +53,10 @@ namespace TimeKeeper
                 {
                     // If the RegistryKey exists I get its value
                     // or null is returned.
-                    return (string)sk1.GetValue(KeyName.ToUpper());
+                    string val = (string)sk1.GetValue(KeyName.ToUpper());
+
+                    if (val == null) return "";
+                    else return val;
                 }
                 catch (Exception e)
                 {

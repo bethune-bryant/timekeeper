@@ -17,7 +17,25 @@ namespace TimeKeeper
     public partial class frmMain : Form
     {
 
-        const string FILE_LOCATION = "settings.tkf";
+        static string FILE_LOCATION
+        {
+            get
+            {
+                string retval = Utilities.ReadFromRegistry("settingsfile").Trim();
+                if (retval.Length <= 0)
+                {
+                    return "settings.tkf";
+                }
+                else
+                {
+                    return retval;
+                }
+            }
+            set
+            {
+                Utilities.WriteToRegistry("settingsfile", value);
+            }
+        }
 
         public static Settings settings = new Settings(FILE_LOCATION);
 
@@ -575,7 +593,11 @@ namespace TimeKeeper
         private void timerSave_Tick(object sender, EventArgs e)
         {
             string toSave = settings.ToString();
-            if (File.ReadAllText(FILE_LOCATION).Trim() != toSave.Trim())
+            if (!File.Exists(FILE_LOCATION))
+            {
+                File.WriteAllText(FILE_LOCATION, toSave);
+            }
+            else if (File.ReadAllText(FILE_LOCATION).Trim() != toSave.Trim())
             {
                 File.WriteAllText(FILE_LOCATION, toSave);
             }
@@ -877,6 +899,16 @@ namespace TimeKeeper
             frmLogin login = new frmLogin();
 
             login.ShowDialog();
+        }
+
+        private void settingsFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialogSettings.FileName = FILE_LOCATION;
+
+            if (saveFileDialogSettings.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                FILE_LOCATION = Path.GetFullPath(saveFileDialogSettings.FileName);
+            }
         }
     }
 }

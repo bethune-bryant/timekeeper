@@ -40,6 +40,10 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dailyTaskReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.jiraLoginSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.taskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,8 +69,7 @@
             this.groupPrevious = new System.Windows.Forms.GroupBox();
             this.tabPrevious = new System.Windows.Forms.TabControl();
             this.timerWorking = new System.Windows.Forms.Timer(this.components);
-            this.jiraLoginSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveFileDialogSettings = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataThisWeek)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -118,7 +121,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.reportsToolStripMenuItem,
             this.toolStripSeparator4,
-            this.jiraLoginSettingsToolStripMenuItem,
+            this.settingsToolStripMenuItem,
             this.toolStripSeparator5,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -134,7 +137,7 @@
             this.toolStripSeparator1,
             this.dailyTaskReportToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.reportsToolStripMenuItem.Text = "Reports";
             // 
             // reportToolStripMenuItem
@@ -169,12 +172,39 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(113, 6);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.jiraLoginSettingsToolStripMenuItem,
+            this.settingsFileLocationToolStripMenuItem});
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // jiraLoginSettingsToolStripMenuItem
+            // 
+            this.jiraLoginSettingsToolStripMenuItem.Name = "jiraLoginSettingsToolStripMenuItem";
+            this.jiraLoginSettingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.jiraLoginSettingsToolStripMenuItem.Text = "Jira Login";
+            // 
+            // settingsFileLocationToolStripMenuItem
+            // 
+            this.settingsFileLocationToolStripMenuItem.Name = "settingsFileLocationToolStripMenuItem";
+            this.settingsFileLocationToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.settingsFileLocationToolStripMenuItem.Text = "Settings File Location";
+            this.settingsFileLocationToolStripMenuItem.Click += new System.EventHandler(this.settingsFileLocationToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(113, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -388,17 +418,11 @@
             // 
             this.timerWorking.Tick += new System.EventHandler(this.timerWorking_Tick);
             // 
-            // jiraLoginSettingsToolStripMenuItem
+            // saveFileDialogSettings
             // 
-            this.jiraLoginSettingsToolStripMenuItem.Name = "jiraLoginSettingsToolStripMenuItem";
-            this.jiraLoginSettingsToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
-            this.jiraLoginSettingsToolStripMenuItem.Text = "Jira Login Settings";
-            this.jiraLoginSettingsToolStripMenuItem.Click += new System.EventHandler(this.jiraLoginSettingsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(166, 6);
+            this.saveFileDialogSettings.DefaultExt = "tkf";
+            this.saveFileDialogSettings.FileName = "settings.tkf";
+            this.saveFileDialogSettings.Filter = "Timekeeper Setting Files|*.tkf";
             // 
             // frmMain
             // 
@@ -474,8 +498,11 @@
         private System.Windows.Forms.ToolStripMenuItem dailyTaskReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem monthlyEmployerReportsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem jiraLoginSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem jiraLoginSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsFileLocationToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogSettings;
     }
 }
 
