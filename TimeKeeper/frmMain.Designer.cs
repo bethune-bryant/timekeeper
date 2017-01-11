@@ -49,7 +49,6 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.addDailyScrumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.recentTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -70,6 +69,11 @@
             this.tabPrevious = new System.Windows.Forms.TabControl();
             this.timerWorking = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialogSettings = new System.Windows.Forms.SaveFileDialog();
+            this.commonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCommonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newCommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteACommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editACommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataThisWeek)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -215,7 +219,8 @@
             this.addToolStripMenuItem,
             this.closeToolStripMenuItem1,
             this.toolStripSeparator2,
-            this.addDailyScrumToolStripMenuItem,
+            this.commonTasksToolStripMenuItem,
+            this.editCommonTasksToolStripMenuItem,
             this.toolStripSeparator3,
             this.recentTasksToolStripMenuItem});
             this.taskToolStripMenuItem.Name = "taskToolStripMenuItem";
@@ -240,13 +245,6 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
-            // 
-            // addDailyScrumToolStripMenuItem
-            // 
-            this.addDailyScrumToolStripMenuItem.Name = "addDailyScrumToolStripMenuItem";
-            this.addDailyScrumToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.addDailyScrumToolStripMenuItem.Text = "Add Daily Scrum";
-            this.addDailyScrumToolStripMenuItem.Click += new System.EventHandler(this.addDailyScrumToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -425,6 +423,41 @@
             this.saveFileDialogSettings.FileName = "settings.tkf";
             this.saveFileDialogSettings.Filter = "Timekeeper Setting Files|*.tkf";
             // 
+            // commonTasksToolStripMenuItem
+            // 
+            this.commonTasksToolStripMenuItem.Name = "commonTasksToolStripMenuItem";
+            this.commonTasksToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.commonTasksToolStripMenuItem.Text = "Common Tasks";
+            // 
+            // editCommonTasksToolStripMenuItem
+            // 
+            this.editCommonTasksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newCommonTaskToolStripMenuItem,
+            this.deleteACommonTaskToolStripMenuItem,
+            this.editACommonTaskToolStripMenuItem});
+            this.editCommonTasksToolStripMenuItem.Name = "editCommonTasksToolStripMenuItem";
+            this.editCommonTasksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCommonTasksToolStripMenuItem.Text = "Edit Common Tasks";
+            // 
+            // newCommonTaskToolStripMenuItem
+            // 
+            this.newCommonTaskToolStripMenuItem.Name = "newCommonTaskToolStripMenuItem";
+            this.newCommonTaskToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.newCommonTaskToolStripMenuItem.Text = "New Common Task";
+            this.newCommonTaskToolStripMenuItem.Click += new System.EventHandler(this.newCommonTaskToolStripMenuItem_Click);
+            // 
+            // deleteACommonTaskToolStripMenuItem
+            // 
+            this.deleteACommonTaskToolStripMenuItem.Name = "deleteACommonTaskToolStripMenuItem";
+            this.deleteACommonTaskToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.deleteACommonTaskToolStripMenuItem.Text = "Delete a Common Task";
+            // 
+            // editACommonTaskToolStripMenuItem
+            // 
+            this.editACommonTaskToolStripMenuItem.Name = "editACommonTaskToolStripMenuItem";
+            this.editACommonTaskToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.editACommonTaskToolStripMenuItem.Text = "Edit a Common Task";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -489,7 +522,6 @@
         private System.Windows.Forms.ToolStripMenuItem recentTasksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recentTasksToolStripMenuItem1;
         private System.Windows.Forms.TabControl tabPrevious;
-        private System.Windows.Forms.ToolStripMenuItem addDailyScrumToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.Timer timerWorking;
         private System.Windows.Forms.ToolStripMenuItem reportsToolStripMenuItem;
@@ -504,6 +536,11 @@
         private System.Windows.Forms.ToolStripMenuItem jiraLoginSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsFileLocationToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialogSettings;
+        private System.Windows.Forms.ToolStripMenuItem commonTasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editCommonTasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newCommonTaskToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteACommonTaskToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editACommonTaskToolStripMenuItem;
     }
 }
 

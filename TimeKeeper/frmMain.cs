@@ -66,6 +66,7 @@ namespace TimeKeeper
         private void Form1_Load(object sender, EventArgs e)
         {
             RefreshEntries();
+            RefreshCommonTasks();
             timerSave.Enabled = true;
             timerWorking.Interval = settings.StillWorkingTime * 60 * 1000;
             timerWorking.Enabled = true;
@@ -854,21 +855,6 @@ namespace TimeKeeper
             this.showHideToolStripMenuItem_Click(sender, e);
         }
 
-        private void addDailyScrumToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            frmChooseDay dayChooser = new frmChooseDay();
-
-            if (dayChooser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                for (DateTime day = dayChooser.SelectedDates.Start; day <= dayChooser.SelectedDates.End; day = day.AddDays(1))
-                {
-                    settings.TimeEntries.Add(new TimeEntry("Core Products", "Daily Scrum", "TMT", new DateTime(day.Year, day.Month, day.Day, 8, 45, 0),
-                                                            new DateTime(day.Year, day.Month, day.Day, 9, 0, 0), ""));
-                }
-                RefreshEntries();
-            }
-        }
-
         private void timerWorking_Tick(object sender, EventArgs e)
         {
             timerWorking.Enabled = false;
@@ -909,6 +895,90 @@ namespace TimeKeeper
             {
                 FILE_LOCATION = Path.GetFullPath(saveFileDialogSettings.FileName);
             }
+        }
+
+        private void addCommonTaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimeEntry task = (sender as ToolStripMenuItem).Tag as TimeEntry;
+            
+            frmChooseDay dayChooser = new frmChooseDay();
+
+            if (dayChooser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                for (DateTime day = dayChooser.SelectedDates.Start; day <= dayChooser.SelectedDates.End; day = day.AddDays(1))
+                {
+                    AddTimeEntry(new TimeEntry(task.Project, task.Task, task.Employer, new DateTime(day.Year, day.Month, day.Day, task.Start.Hour, task.Start.Minute, 0),
+                                                            new DateTime(day.Year, day.Month, day.Day, task.Stop.Hour, task.Stop.Minute, 0), ""));
+                }
+                RefreshEntries();
+            }
+        }
+
+        private void newCommonTaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmTimeEntry form = new frmTimeEntry(settings.NextCommonTask);
+
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                settings.CommonTasks.Add(form.Value);
+            }
+            RefreshCommonTasks();
+        }
+
+        private void deleteCommonTaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimeEntry task = (sender as ToolStripMenuItem).Tag as TimeEntry;
+
+            if (MessageBox.Show("Do you really want to delete the common task " + task.Task + "?", "Are you sure?", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            {
+                settings.CommonTasks.Remove(task);
+                RefreshCommonTasks();
+            }
+        }
+
+        private void editCommonTaskToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimeEntry task = (sender as ToolStripMenuItem).Tag as TimeEntry;
+
+            frmTimeEntry form = new frmTimeEntry(task);
+
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                settings.CommonTasks.Remove(task);
+                settings.CommonTasks.Add(form.Value);
+            }
+            RefreshCommonTasks();
+        }
+
+        private void RefreshCommonTasks()
+        {
+            commonTasksToolStripMenuItem.DropDownItems.Clear();
+            deleteACommonTaskToolStripMenuItem.DropDownItems.Clear();
+            editACommonTaskToolStripMenuItem.DropDownItems.Clear();
+
+            foreach (TimeEntry commonTask in settings.CommonTasks)
+            {
+                ToolStripMenuItem newCommonTask = new ToolStripMenuItem();
+                newCommonTask.Text = "Add " + commonTask.Task;
+                newCommonTask.Click += addCommonTaskToolStripMenuItem_Click;
+                newCommonTask.Tag = commonTask;
+                commonTasksToolStripMenuItem.DropDownItems.Add(newCommonTask);
+
+
+                ToolStripMenuItem deleteCommonTask = new ToolStripMenuItem();
+                deleteCommonTask.Text = "Delete " + commonTask.Task;
+                deleteCommonTask.Click += deleteCommonTaskToolStripMenuItem_Click;
+                deleteCommonTask.Tag = commonTask;
+                deleteACommonTaskToolStripMenuItem.DropDownItems.Add(deleteCommonTask);
+
+
+                ToolStripMenuItem editCommonTask = new ToolStripMenuItem();
+                editCommonTask.Text = "Edit " + commonTask.Task;
+                editCommonTask.Click += editCommonTaskToolStripMenuItem_Click;
+                editCommonTask.Tag = commonTask;
+                editACommonTaskToolStripMenuItem.DropDownItems.Add(editCommonTask);
+            }
+
         }
     }
 }

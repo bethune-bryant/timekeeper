@@ -17,6 +17,8 @@ namespace TimeKeeper
     {
         public List<TimeEntry> TimeEntries { get; set; }
 
+        public List<TimeEntry> CommonTasks { get; set; }
+
         public int StillWorkingTime { get; set; }
 
         public override string ToString()
@@ -39,6 +41,7 @@ namespace TimeKeeper
         public Settings()
         {
             this.TimeEntries = new List<TimeEntry>();
+            this.CommonTasks = new List<TimeEntry>();
             this.StillWorkingTime = 15;
         }
 
@@ -61,6 +64,7 @@ namespace TimeKeeper
                 Settings setting = serializer.Deserialize(read) as Settings;
 
                 this.TimeEntries = setting.TimeEntries;
+                this.CommonTasks = setting.CommonTasks;
                 this.StillWorkingTime = setting.StillWorkingTime;
             }
             catch (Exception exc)
@@ -74,11 +78,17 @@ namespace TimeKeeper
         {
             get
             {
-                foreach (TimeEntry entry in this.TimeEntries)
-                    if (entry.Stop.Equals(TimeEntry.MIN_DATE))
-                        return entry;
 
-                return null;
+                if (this.TimeEntries.Where(entry => entry.Stop.Equals(TimeEntry.MIN_DATE)).Count() == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return this.TimeEntries.Where(entry => entry.Stop.Equals(TimeEntry.MIN_DATE))
+                                           .Aggregate((i, j) => i.Start > j.Start ? i : j);
+                }
+
             }
         }
 
@@ -88,6 +98,19 @@ namespace TimeKeeper
             get
             {
                 return this.TimeEntries.Select(entry => new TimeEntry(entry.Project, entry.Task, entry.Employer, TimeEntry.MIN_DATE, TimeEntry.MIN_DATE, "")).Distinct().ToList();
+            }
+        }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public TimeEntry NextCommonTask
+        {
+            get
+            {
+                return this.TimeEntries.Where(entry => this.CommonTasks.Where(common => common.Task == entry.Task).Count() == 0)
+                                       .GroupBy(entry => entry.Task)
+                                       .Aggregate((i, j) => i.Count() > j.Count() ? i : j)
+                                       .Select(entry => new TimeEntry(entry.Project, entry.Task, entry.Employer, entry.Start, entry.Stop, entry.Comments))
+                                       .First();
             }
         }
     }
