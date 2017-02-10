@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace TimeKeeper
 {
@@ -298,18 +300,38 @@ namespace TimeKeeper
             return retval;
         }
 
+        private const string LOG_COMMENT = "Logging via [TimeKeeper|https://github.com/bethune-bryant/timekeeper]";
+
+        private static string WorkLogToJSON(DateTime started, DateTime stopped)
+        {
+            StringBuilder josnData = new StringBuilder();
+            StringWriter sw = new StringWriter(josnData);
+
+            using (JsonWriter jsonWriter = new JsonTextWriter(sw))
+            {
+                jsonWriter.WriteStartObject();
+                jsonWriter.WritePropertyName("timeSpent");
+                jsonWriter.WriteValue((stopped - started).Hours.ToString() + "h " + (stopped - started).Minutes.ToString() + "m");
+                jsonWriter.WritePropertyName("started");
+                jsonWriter.WriteValue(started.ToString("yyyy-MM-ddTHH:mm:ss.fffzz00"));
+                jsonWriter.WritePropertyName("comment");
+                jsonWriter.WriteValue(LOG_COMMENT);
+                jsonWriter.WriteEndObject();
+            }
+
+            return josnData.ToString();
+        }
+
         private static void AddWorkLog(string taskID, DateTime started, DateTime stopped)
         {
-            string postData = "{\"timeSpent\": \"" + (stopped - started).Hours + "h " + (stopped - started).Minutes + "m" + "\",\"started\": \"" + started.ToString("yyyy-MM-ddTHH:mm:ss.fffzz00") + "\",\"comment\": \"logging via TimeKeeper\"}";
-
+            string postData = WorkLogToJSON(started, stopped);
             RunPostQuery("/issue/" + taskID + "/worklog", postData, Username, Password);
         }
 
         private static void UpdateWorkLog(string taskID, string workLogID, DateTime started, DateTime stopped)
         {
-            string postData = "{\"timeSpent\": \"" + (stopped - started).Hours + "h " + (stopped - started).Minutes + "m" + "\",\"started\": \"" + started.ToString("yyyy-MM-ddTHH:mm:ss.fffzz00") + "\",\"comment\": \"logging via TimeKeeper\"}";
-
-            RunPutQuery("/issue/" + taskID + "/worklog/" + workLogID, postData, Username, Password);
+            string putData = WorkLogToJSON(started, stopped);
+            RunPutQuery("/issue/" + taskID + "/worklog/" + workLogID, putData, Username, Password);
         }
 
         public static void DeleteWorkLog(string taskID, string workLogID)
