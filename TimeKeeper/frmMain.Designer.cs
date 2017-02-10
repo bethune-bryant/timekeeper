@@ -49,6 +49,11 @@
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.commonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCommonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newCommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteACommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editACommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.recentTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -69,11 +74,7 @@
             this.tabPrevious = new System.Windows.Forms.TabControl();
             this.timerWorking = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialogSettings = new System.Windows.Forms.SaveFileDialog();
-            this.commonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editCommonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newCommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteACommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editACommonTaskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stillWorkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataThisWeek)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -141,7 +142,7 @@
             this.toolStripSeparator1,
             this.dailyTaskReportToolStripMenuItem});
             this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reportsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.reportsToolStripMenuItem.Text = "Reports";
             // 
             // reportToolStripMenuItem
@@ -176,7 +177,7 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(113, 6);
             // 
             // settingsToolStripMenuItem
             // 
@@ -184,7 +185,7 @@
             this.jiraLoginSettingsToolStripMenuItem,
             this.settingsFileLocationToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // jiraLoginSettingsToolStripMenuItem
@@ -204,12 +205,12 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(113, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -218,6 +219,7 @@
             this.taskToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addToolStripMenuItem,
             this.closeToolStripMenuItem1,
+            this.stillWorkingToolStripMenuItem,
             this.toolStripSeparator2,
             this.commonTasksToolStripMenuItem,
             this.editCommonTasksToolStripMenuItem,
@@ -230,31 +232,66 @@
             // addToolStripMenuItem
             // 
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addToolStripMenuItem.Text = "Add";
             this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem1
             // 
             this.closeToolStripMenuItem1.Name = "closeToolStripMenuItem1";
-            this.closeToolStripMenuItem1.Size = new System.Drawing.Size(162, 22);
+            this.closeToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem1.Text = "Close";
             this.closeToolStripMenuItem1.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // commonTasksToolStripMenuItem
+            // 
+            this.commonTasksToolStripMenuItem.Name = "commonTasksToolStripMenuItem";
+            this.commonTasksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.commonTasksToolStripMenuItem.Text = "Common Tasks";
+            // 
+            // editCommonTasksToolStripMenuItem
+            // 
+            this.editCommonTasksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newCommonTaskToolStripMenuItem,
+            this.deleteACommonTaskToolStripMenuItem,
+            this.editACommonTaskToolStripMenuItem});
+            this.editCommonTasksToolStripMenuItem.Name = "editCommonTasksToolStripMenuItem";
+            this.editCommonTasksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editCommonTasksToolStripMenuItem.Text = "Edit Common Tasks";
+            // 
+            // newCommonTaskToolStripMenuItem
+            // 
+            this.newCommonTaskToolStripMenuItem.Name = "newCommonTaskToolStripMenuItem";
+            this.newCommonTaskToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.newCommonTaskToolStripMenuItem.Text = "New Common Task";
+            this.newCommonTaskToolStripMenuItem.Click += new System.EventHandler(this.newCommonTaskToolStripMenuItem_Click);
+            // 
+            // deleteACommonTaskToolStripMenuItem
+            // 
+            this.deleteACommonTaskToolStripMenuItem.Name = "deleteACommonTaskToolStripMenuItem";
+            this.deleteACommonTaskToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.deleteACommonTaskToolStripMenuItem.Text = "Delete a Common Task";
+            // 
+            // editACommonTaskToolStripMenuItem
+            // 
+            this.editACommonTaskToolStripMenuItem.Name = "editACommonTaskToolStripMenuItem";
+            this.editACommonTaskToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.editACommonTaskToolStripMenuItem.Text = "Edit a Common Task";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(159, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // recentTasksToolStripMenuItem
             // 
             this.recentTasksToolStripMenuItem.Name = "recentTasksToolStripMenuItem";
-            this.recentTasksToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.recentTasksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.recentTasksToolStripMenuItem.Text = "Recent Tasks";
             // 
             // statusStrip1
@@ -423,40 +460,12 @@
             this.saveFileDialogSettings.FileName = "settings.tkf";
             this.saveFileDialogSettings.Filter = "Timekeeper Setting Files|*.tkf";
             // 
-            // commonTasksToolStripMenuItem
+            // stillWorkingToolStripMenuItem
             // 
-            this.commonTasksToolStripMenuItem.Name = "commonTasksToolStripMenuItem";
-            this.commonTasksToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.commonTasksToolStripMenuItem.Text = "Common Tasks";
-            // 
-            // editCommonTasksToolStripMenuItem
-            // 
-            this.editCommonTasksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newCommonTaskToolStripMenuItem,
-            this.deleteACommonTaskToolStripMenuItem,
-            this.editACommonTaskToolStripMenuItem});
-            this.editCommonTasksToolStripMenuItem.Name = "editCommonTasksToolStripMenuItem";
-            this.editCommonTasksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.editCommonTasksToolStripMenuItem.Text = "Edit Common Tasks";
-            // 
-            // newCommonTaskToolStripMenuItem
-            // 
-            this.newCommonTaskToolStripMenuItem.Name = "newCommonTaskToolStripMenuItem";
-            this.newCommonTaskToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.newCommonTaskToolStripMenuItem.Text = "New Common Task";
-            this.newCommonTaskToolStripMenuItem.Click += new System.EventHandler(this.newCommonTaskToolStripMenuItem_Click);
-            // 
-            // deleteACommonTaskToolStripMenuItem
-            // 
-            this.deleteACommonTaskToolStripMenuItem.Name = "deleteACommonTaskToolStripMenuItem";
-            this.deleteACommonTaskToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.deleteACommonTaskToolStripMenuItem.Text = "Delete a Common Task";
-            // 
-            // editACommonTaskToolStripMenuItem
-            // 
-            this.editACommonTaskToolStripMenuItem.Name = "editACommonTaskToolStripMenuItem";
-            this.editACommonTaskToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.editACommonTaskToolStripMenuItem.Text = "Edit a Common Task";
+            this.stillWorkingToolStripMenuItem.Name = "stillWorkingToolStripMenuItem";
+            this.stillWorkingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stillWorkingToolStripMenuItem.Text = "Still Working?";
+            this.stillWorkingToolStripMenuItem.Click += new System.EventHandler(this.timerWorking_Tick);
             // 
             // frmMain
             // 
@@ -541,6 +550,7 @@
         private System.Windows.Forms.ToolStripMenuItem newCommonTaskToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteACommonTaskToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editACommonTaskToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stillWorkingToolStripMenuItem;
     }
 }
 

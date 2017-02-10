@@ -857,6 +857,13 @@ namespace TimeKeeper
 
         private void timerWorking_Tick(object sender, EventArgs e)
         {
+            //If there is not an active task and there is an already closed task which includes 'NOW', then don't ask about working.
+            if(object.ReferenceEquals(frmMain.settings.LastUnclosedTask, null)
+                && frmMain.settings.TimeEntries.Count(entry => entry.Start <= DateTime.Now && entry.Stop >= DateTime.Now) > 0)
+            {
+                return;
+            }
+
             timerWorking.Enabled = false;
 
             frmWorking stillWorking = new frmWorking();

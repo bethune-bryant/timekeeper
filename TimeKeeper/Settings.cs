@@ -93,6 +93,17 @@ namespace TimeKeeper
         }
 
         [System.Xml.Serialization.XmlIgnore]
+        public TimeEntry LastClosedTask
+        {
+            get
+            {
+                return this.TimeEntries.Where(entry => !entry.Stop.Equals(TimeEntry.MIN_DATE))
+                                       .Aggregate((i, j) => i.Start > j.Start ? i : j);
+
+            }
+        }
+
+        [System.Xml.Serialization.XmlIgnore]
         public List<TimeEntry> RecentTasks
         {
             get
