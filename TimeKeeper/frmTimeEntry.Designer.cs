@@ -44,6 +44,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.comboJiraTask = new System.Windows.Forms.ComboBox();
             this.lblJiraTask = new System.Windows.Forms.Label();
+            this.btnStartAtLast = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.btnStartAtLast)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOK
@@ -190,6 +192,17 @@
             this.lblJiraTask.TabIndex = 15;
             this.lblJiraTask.Text = "Jira Task:";
             // 
+            // btnStartAtLast
+            // 
+            this.btnStartAtLast.Image = global::TimeKeeper.Properties.Resources.go_first;
+            this.btnStartAtLast.Location = new System.Drawing.Point(15, 65);
+            this.btnStartAtLast.Name = "btnStartAtLast";
+            this.btnStartAtLast.Size = new System.Drawing.Size(20, 20);
+            this.btnStartAtLast.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnStartAtLast.TabIndex = 17;
+            this.btnStartAtLast.TabStop = false;
+            this.btnStartAtLast.Click += new System.EventHandler(this.btnStartAtLast_Click);
+            // 
             // frmTimeEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -197,6 +210,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(659, 125);
             this.ControlBox = false;
+            this.Controls.Add(this.btnStartAtLast);
             this.Controls.Add(this.comboJiraTask);
             this.Controls.Add(this.lblJiraTask);
             this.Controls.Add(this.label6);
@@ -220,6 +234,7 @@
             this.Text = "Time Entry";
             this.Load += new System.EventHandler(this.frmTimeEntry_Load);
             this.Shown += new System.EventHandler(this.frmTimeEntry_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.btnStartAtLast)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,5 +258,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboJiraTask;
         private System.Windows.Forms.Label lblJiraTask;
+        private System.Windows.Forms.PictureBox btnStartAtLast;
     }
 }

@@ -138,8 +138,13 @@ namespace TimeKeeper
 
                 return false;
             }
-
+            
             return true;
+        }
+
+        private void btnStartAtLast_Click(object sender, EventArgs e)
+        {
+            this.dateTimePickerStart.Value = frmMain.settings.LastClosedTask.Stop;
         }
     }
 }
