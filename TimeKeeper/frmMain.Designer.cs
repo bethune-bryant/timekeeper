@@ -48,6 +48,7 @@
             this.taskToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.stillWorkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.commonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editCommonTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +75,6 @@
             this.tabPrevious = new System.Windows.Forms.TabControl();
             this.timerWorking = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialogSettings = new System.Windows.Forms.SaveFileDialog();
-            this.stillWorkingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataThisWeek)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -243,6 +243,13 @@
             this.closeToolStripMenuItem1.Text = "Close";
             this.closeToolStripMenuItem1.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
+            // stillWorkingToolStripMenuItem
+            // 
+            this.stillWorkingToolStripMenuItem.Name = "stillWorkingToolStripMenuItem";
+            this.stillWorkingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.stillWorkingToolStripMenuItem.Text = "Still Working?";
+            this.stillWorkingToolStripMenuItem.Click += new System.EventHandler(this.timerWorking_Tick);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -317,6 +324,7 @@
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "TimeKeeper";
             this.notifyIcon1.Visible = true;
+            this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
             this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
             // contextMenuStrip1
@@ -459,13 +467,6 @@
             this.saveFileDialogSettings.DefaultExt = "tkf";
             this.saveFileDialogSettings.FileName = "settings.tkf";
             this.saveFileDialogSettings.Filter = "Timekeeper Setting Files|*.tkf";
-            // 
-            // stillWorkingToolStripMenuItem
-            // 
-            this.stillWorkingToolStripMenuItem.Name = "stillWorkingToolStripMenuItem";
-            this.stillWorkingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.stillWorkingToolStripMenuItem.Text = "Still Working?";
-            this.stillWorkingToolStripMenuItem.Click += new System.EventHandler(this.timerWorking_Tick);
             // 
             // frmMain
             // 

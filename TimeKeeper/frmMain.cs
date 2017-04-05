@@ -867,6 +867,8 @@ namespace TimeKeeper
             timerWorking.Enabled = false;
 
             frmWorking stillWorking = new frmWorking();
+            
+            notifyIcon1.ShowBalloonTip(10000, "Working Check", "Are you still working/not working?", ToolTipIcon.Info);
 
             if (stillWorking.ShowDialog() == System.Windows.Forms.DialogResult.No)
             {
@@ -986,6 +988,11 @@ namespace TimeKeeper
                 editACommonTaskToolStripMenuItem.DropDownItems.Add(editCommonTask);
             }
 
+        }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        {
+            SetWindowFocus();
         }
     }
 }
