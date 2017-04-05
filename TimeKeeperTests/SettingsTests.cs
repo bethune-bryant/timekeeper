@@ -76,5 +76,37 @@ namespace TimeKeeper.Tests
             Assert.AreEqual("Test Task2", temp.Task);
             Assert.AreEqual("Test Employer", temp.Employer);
         }
+
+        [TestMethod()]
+        public void LastClosedTaskTest()
+        {
+            Settings test = new Settings();
+
+            Assert.AreEqual(null, test.LastClosedTask);
+
+            test.TimeEntries.Add(new TimeEntry("Test Project", "Test Task1", "Test Employer", DateTime.Now));
+
+            Assert.AreEqual(null, test.LastClosedTask);
+
+            TimeEntry temp = test.LastUnclosedTask;
+
+            Assert.AreEqual("Test Project", temp.Project);
+            Assert.AreEqual("Test Task1", temp.Task);
+            Assert.AreEqual("Test Employer", temp.Employer);
+
+            test.TimeEntries.Remove(temp);
+
+            Assert.AreEqual(null, test.LastClosedTask);
+
+            temp.Stop = DateTime.Now;
+
+            test.TimeEntries.Add(temp);
+
+            Assert.AreEqual(temp, test.LastClosedTask);
+
+            test.TimeEntries.Add(new TimeEntry("Test Project", "Test Task2", "Test Employer", DateTime.Now.AddDays(-1)));
+
+            Assert.AreEqual(temp, test.LastClosedTask);
+        }
     }
 }

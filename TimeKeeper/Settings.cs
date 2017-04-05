@@ -97,8 +97,17 @@ namespace TimeKeeper
         {
             get
             {
-                return this.TimeEntries.Where(entry => !entry.Stop.Equals(TimeEntry.MIN_DATE))
-                                       .Aggregate((i, j) => i.Start > j.Start ? i : j);
+
+
+                if (this.TimeEntries.Where(entry => !entry.Stop.Equals(TimeEntry.MIN_DATE)).Count() == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return this.TimeEntries.Where(entry => !entry.Stop.Equals(TimeEntry.MIN_DATE))
+                                           .Aggregate((i, j) => i.Start > j.Start ? i : j);
+                }
 
             }
         }
