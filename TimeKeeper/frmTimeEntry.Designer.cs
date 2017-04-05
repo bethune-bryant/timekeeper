@@ -45,7 +45,9 @@
             this.comboJiraTask = new System.Windows.Forms.ComboBox();
             this.lblJiraTask = new System.Windows.Forms.Label();
             this.btnStartAtLast = new System.Windows.Forms.PictureBox();
+            this.btnStopAtNow = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.btnStartAtLast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnStopAtNow)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOK
@@ -208,13 +210,25 @@
             this.btnStartAtLast.TabStop = false;
             this.btnStartAtLast.Click += new System.EventHandler(this.btnStartAtLast_Click);
             // 
+            // btnStopAtNow
+            // 
+            this.btnStopAtNow.Image = global::TimeKeeper.Properties.Resources.go_first;
+            this.btnStopAtNow.Location = new System.Drawing.Point(637, 65);
+            this.btnStopAtNow.Name = "btnStopAtNow";
+            this.btnStopAtNow.Size = new System.Drawing.Size(20, 20);
+            this.btnStopAtNow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.btnStopAtNow.TabIndex = 18;
+            this.btnStopAtNow.TabStop = false;
+            this.btnStopAtNow.Click += new System.EventHandler(this.btnStopAtNow_Click);
+            // 
             // frmTimeEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(659, 125);
+            this.ClientSize = new System.Drawing.Size(663, 125);
             this.ControlBox = false;
+            this.Controls.Add(this.btnStopAtNow);
             this.Controls.Add(this.btnStartAtLast);
             this.Controls.Add(this.comboJiraTask);
             this.Controls.Add(this.lblJiraTask);
@@ -240,6 +254,7 @@
             this.Load += new System.EventHandler(this.frmTimeEntry_Load);
             this.Shown += new System.EventHandler(this.frmTimeEntry_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.btnStartAtLast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnStopAtNow)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +279,6 @@
         private System.Windows.Forms.ComboBox comboJiraTask;
         private System.Windows.Forms.Label lblJiraTask;
         private System.Windows.Forms.PictureBox btnStartAtLast;
+        private System.Windows.Forms.PictureBox btnStopAtNow;
     }
 }

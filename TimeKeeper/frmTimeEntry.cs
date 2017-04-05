@@ -37,6 +37,8 @@ namespace TimeKeeper
             this.txtComments.Text = input.Comments;
             this.workLog = input.WorkLog;
             this.comboJiraTask.Text = input.WorkLog.TaskID;
+
+            this.btnStopAtNow.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
         }
 
         public TimeEntry Value
@@ -136,6 +138,11 @@ namespace TimeKeeper
         private void btnStartAtLast_Click(object sender, EventArgs e)
         {
             this.dateTimePickerStart.Value = frmMain.settings.LastClosedTask.Stop;
+        }
+
+        private void btnStopAtNow_Click(object sender, EventArgs e)
+        {
+            this.dateTimePickerStop.Value = DateTime.Now;
         }
 
         private void all_KeyUp(object sender, KeyEventArgs e)
