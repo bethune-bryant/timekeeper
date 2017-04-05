@@ -55,7 +55,7 @@
             0});
             this.numAskAgain.Name = "numAskAgain";
             this.numAskAgain.Size = new System.Drawing.Size(36, 20);
-            this.numAskAgain.TabIndex = 2;
+            this.numAskAgain.TabIndex = 6;
             this.numAskAgain.Value = new decimal(new int[] {
             15,
             0,
@@ -68,7 +68,7 @@
             this.radioYes.Location = new System.Drawing.Point(12, 12);
             this.radioYes.Name = "radioYes";
             this.radioYes.Size = new System.Drawing.Size(146, 17);
-            this.radioYes.TabIndex = 3;
+            this.radioYes.TabIndex = 1;
             this.radioYes.TabStop = true;
             this.radioYes.Text = "Yes, I\'m still working on ...";
             this.radioYes.UseVisualStyleBackColor = true;
@@ -79,7 +79,7 @@
             this.radioNew.Location = new System.Drawing.Point(12, 35);
             this.radioNew.Name = "radioNew";
             this.radioNew.Size = new System.Drawing.Size(139, 17);
-            this.radioNew.TabIndex = 4;
+            this.radioNew.TabIndex = 2;
             this.radioNew.TabStop = true;
             this.radioNew.Text = "No, now I\'m working on:";
             this.radioNew.UseVisualStyleBackColor = true;
@@ -96,7 +96,7 @@
             this.radioNo.Location = new System.Drawing.Point(12, 58);
             this.radioNo.Name = "radioNo";
             this.radioNo.Size = new System.Drawing.Size(140, 17);
-            this.radioNo.TabIndex = 5;
+            this.radioNo.TabIndex = 4;
             this.radioNo.TabStop = true;
             this.radioNo.Text = "No, I\'m finished working.";
             this.radioNo.UseVisualStyleBackColor = true;
@@ -125,7 +125,7 @@
             this.comboNew.Location = new System.Drawing.Point(157, 34);
             this.comboNew.Name = "comboNew";
             this.comboNew.Size = new System.Drawing.Size(171, 21);
-            this.comboNew.TabIndex = 8;
+            this.comboNew.TabIndex = 3;
             this.comboNew.SelectedIndexChanged += new System.EventHandler(this.comboNew_SelectedIndexChanged);
             // 
             // btnOk
@@ -133,7 +133,7 @@
             this.btnOk.Location = new System.Drawing.Point(147, 126);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 9;
+            this.btnOk.TabIndex = 5;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);

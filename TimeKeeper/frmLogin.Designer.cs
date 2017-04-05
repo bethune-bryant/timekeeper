@@ -49,7 +49,7 @@
             this.btnOk.Location = new System.Drawing.Point(141, 90);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 9;
+            this.btnOk.TabIndex = 4;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -68,14 +68,14 @@
             this.txtURL.Location = new System.Drawing.Point(15, 25);
             this.txtURL.Name = "txtURL";
             this.txtURL.Size = new System.Drawing.Size(335, 20);
-            this.txtURL.TabIndex = 11;
+            this.txtURL.TabIndex = 1;
             // 
             // txtUser
             // 
             this.txtUser.Location = new System.Drawing.Point(15, 64);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(156, 20);
-            this.txtUser.TabIndex = 13;
+            this.txtUser.TabIndex = 2;
             // 
             // lblUser
             // 
@@ -92,7 +92,7 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(156, 20);
-            this.txtPass.TabIndex = 15;
+            this.txtPass.TabIndex = 3;
             // 
             // lblPass
             // 

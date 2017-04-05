@@ -53,7 +53,7 @@
             this.btnOK.Location = new System.Drawing.Point(239, 91);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 6;
+            this.btnOK.TabIndex = 7;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -64,7 +64,7 @@
             this.btnCancel.Location = new System.Drawing.Point(320, 91);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -126,7 +126,7 @@
             this.dateTimePickerStart.Location = new System.Drawing.Point(77, 65);
             this.dateTimePickerStart.Name = "dateTimePickerStart";
             this.dateTimePickerStart.Size = new System.Drawing.Size(260, 20);
-            this.dateTimePickerStart.TabIndex = 4;
+            this.dateTimePickerStart.TabIndex = 5;
             // 
             // label4
             // 
@@ -152,8 +152,8 @@
             this.dateTimePickerStop.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePickerStop.Location = new System.Drawing.Point(387, 65);
             this.dateTimePickerStop.Name = "dateTimePickerStop";
-            this.dateTimePickerStop.Size = new System.Drawing.Size(260, 20);
-            this.dateTimePickerStop.TabIndex = 5;
+            this.dateTimePickerStop.Size = new System.Drawing.Size(244, 20);
+            this.dateTimePickerStop.TabIndex = 6;
             // 
             // txtComments
             // 
@@ -180,7 +180,7 @@
             this.comboJiraTask.Location = new System.Drawing.Point(501, 39);
             this.comboJiraTask.Name = "comboJiraTask";
             this.comboJiraTask.Size = new System.Drawing.Size(146, 21);
-            this.comboJiraTask.TabIndex = 14;
+            this.comboJiraTask.TabIndex = 4;
             this.comboJiraTask.SelectedIndexChanged += new System.EventHandler(this.comboJiraTask_SelectedIndexChanged);
             // 
             // lblJiraTask
