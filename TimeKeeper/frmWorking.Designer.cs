@@ -61,6 +61,7 @@
             0,
             0,
             0});
+            this.numAskAgain.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // radioYes
             // 
@@ -72,6 +73,7 @@
             this.radioYes.TabStop = true;
             this.radioYes.Text = "Yes, I\'m still working on ...";
             this.radioYes.UseVisualStyleBackColor = true;
+            this.radioYes.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // radioNew
             // 
@@ -83,6 +85,7 @@
             this.radioNew.TabStop = true;
             this.radioNew.Text = "No, now I\'m working on:";
             this.radioNew.UseVisualStyleBackColor = true;
+            this.radioNew.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // directorySearcher1
             // 
@@ -100,6 +103,7 @@
             this.radioNo.TabStop = true;
             this.radioNo.Text = "No, I\'m finished working.";
             this.radioNo.UseVisualStyleBackColor = true;
+            this.radioNo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // lblAsk
             // 
@@ -127,6 +131,7 @@
             this.comboNew.Size = new System.Drawing.Size(171, 21);
             this.comboNew.TabIndex = 3;
             this.comboNew.SelectedIndexChanged += new System.EventHandler(this.comboNew_SelectedIndexChanged);
+            this.comboNew.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // btnOk
             // 

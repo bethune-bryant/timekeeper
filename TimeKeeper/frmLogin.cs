@@ -32,5 +32,14 @@ namespace TimeKeeper
 
             this.Close();
         }
+
+        private void all_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.btnOk_Click(sender, e);
+                e.Handled = true;
+            }
+        }
     }
 }

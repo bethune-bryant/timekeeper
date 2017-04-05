@@ -69,6 +69,7 @@
             this.txtURL.Name = "txtURL";
             this.txtURL.Size = new System.Drawing.Size(335, 20);
             this.txtURL.TabIndex = 1;
+            this.txtURL.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // txtUser
             // 
@@ -76,6 +77,7 @@
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(156, 20);
             this.txtUser.TabIndex = 2;
+            this.txtUser.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // lblUser
             // 
@@ -93,6 +95,7 @@
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(156, 20);
             this.txtPass.TabIndex = 3;
+            this.txtPass.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // lblPass
             // 

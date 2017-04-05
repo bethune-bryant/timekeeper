@@ -50,9 +50,13 @@ namespace TimeKeeper
             this.Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void all_KeyUp(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.btnOK_Click(sender, e);
+                e.Handled = true;
+            }
         }
 
 

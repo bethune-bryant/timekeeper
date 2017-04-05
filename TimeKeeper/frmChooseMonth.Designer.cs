@@ -52,7 +52,6 @@
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // dateTimePicker
             // 
@@ -62,6 +61,7 @@
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(237, 20);
             this.dateTimePicker.TabIndex = 1;
+            this.dateTimePicker.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // frmChooseMonth
             // 

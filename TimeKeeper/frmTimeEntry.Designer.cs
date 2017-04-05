@@ -84,6 +84,7 @@
             this.comboProject.Name = "comboProject";
             this.comboProject.Size = new System.Drawing.Size(146, 21);
             this.comboProject.TabIndex = 0;
+            this.comboProject.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // comboTask
             // 
@@ -92,6 +93,7 @@
             this.comboTask.Name = "comboTask";
             this.comboTask.Size = new System.Drawing.Size(146, 21);
             this.comboTask.TabIndex = 1;
+            this.comboTask.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // label2
             // 
@@ -109,6 +111,7 @@
             this.comboEmployer.Name = "comboEmployer";
             this.comboEmployer.Size = new System.Drawing.Size(146, 21);
             this.comboEmployer.TabIndex = 2;
+            this.comboEmployer.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // label3
             // 
@@ -127,6 +130,7 @@
             this.dateTimePickerStart.Name = "dateTimePickerStart";
             this.dateTimePickerStart.Size = new System.Drawing.Size(260, 20);
             this.dateTimePickerStart.TabIndex = 5;
+            this.dateTimePickerStart.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // label4
             // 
@@ -154,6 +158,7 @@
             this.dateTimePickerStop.Name = "dateTimePickerStop";
             this.dateTimePickerStop.Size = new System.Drawing.Size(244, 20);
             this.dateTimePickerStop.TabIndex = 6;
+            this.dateTimePickerStop.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // txtComments
             // 
@@ -163,7 +168,7 @@
             this.txtComments.Name = "txtComments";
             this.txtComments.Size = new System.Drawing.Size(345, 20);
             this.txtComments.TabIndex = 3;
-            this.txtComments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtComments_KeyUp);
+            this.txtComments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // label6
             // 

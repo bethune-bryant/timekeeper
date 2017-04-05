@@ -97,15 +97,6 @@ namespace TimeKeeper
             }
         }
 
-        private void txtComments_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.Handled = true;
-                btnOK_Click(sender, e);
-            }
-        }
-
         private void frmTimeEntry_Shown(object sender, EventArgs e)
         {
             if (commentFocus)
@@ -145,6 +136,15 @@ namespace TimeKeeper
         private void btnStartAtLast_Click(object sender, EventArgs e)
         {
             this.dateTimePickerStart.Value = frmMain.settings.LastClosedTask.Stop;
+        }
+
+        private void all_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.btnOK_Click(sender, e);
+                e.Handled = true;
+            }
         }
     }
 }

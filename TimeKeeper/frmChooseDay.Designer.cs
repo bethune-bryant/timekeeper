@@ -38,6 +38,7 @@
             this.monthCalendar1.Location = new System.Drawing.Point(18, 18);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 1;
+            this.monthCalendar1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // btnOK
             // 
@@ -58,7 +59,6 @@
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // frmChooseDay
             // 
