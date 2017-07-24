@@ -48,7 +48,8 @@ namespace TimeKeeper
         {
             get
             {
-                return Utilities.ReadFromRegistry("jiraurl");
+                try { return Utilities.ReadFromRegistry("jiraurl"); }
+                catch { return ""; }
             }
             set
             {
@@ -60,7 +61,8 @@ namespace TimeKeeper
         {
             get
             {
-                return Utilities.ReadFromRegistry("jirausername");
+                try { return Utilities.ReadFromRegistry("jirausername"); }
+                catch { return ""; }
             }
             set
             {
@@ -72,7 +74,8 @@ namespace TimeKeeper
         {
             get
             {
-                return Encryption.Decrypt(Utilities.ReadFromRegistry("jirapassword"));
+                try { return Encryption.Decrypt(Utilities.ReadFromRegistry("jirapassword")); }
+                catch { return ""; }
             }
             set
             {
@@ -246,14 +249,18 @@ namespace TimeKeeper
         {
             List<string> retval = new List<string>();
 
-            dynamic queryResult = RunQuery("/search?jql=project+%3D+TD+AND+status+in+(Open%2C+\"In+Progress\"%2C+Reopened)+AND+assignee+in+(currentUser())&tempMax=1000", Username, Password);
-
-            int total = queryResult.total;
-
-            for (int i = 0; i < total; i++)
+            try
             {
-                retval.Add(queryResult.issues[i].key.ToString());
+                dynamic queryResult = RunQuery("/search?jql=project+%3D+TD+AND+status+in+(Open%2C+\"In+Progress\"%2C+Reopened)+AND+assignee+in+(currentUser())&tempMax=1000", Username, Password);
+
+                int total = queryResult.total;
+
+                for (int i = 0; i < total; i++)
+                {
+                    retval.Add(queryResult.issues[i].key.ToString());
+                }
             }
+            catch { }
 
             return retval;
         }

@@ -740,6 +740,11 @@ namespace TimeKeeper
                 totalsChart.Add(project + tableRow);
             }
 
+            for (int i = 0; i < 4 - timeEntries.Count; i++)
+            {
+                timeEntries.Add("");
+            }
+
             for (int i = 0; i < totalsChart.Count; i++)
             {
                 if (timeEntries.Count > (i + 3))
@@ -748,7 +753,7 @@ namespace TimeKeeper
                 }
                 else
                 {
-                    timeEntries.Add(",,,,,,,,," + timeEntries[i]);
+                    timeEntries.Add(",,,,,,,,,,,," + totalsChart[i]);
                 }
             }
 
@@ -898,12 +903,25 @@ namespace TimeKeeper
 
         private void settingsFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            timerSave.Enabled = false;
+            timerWorking.Enabled = false;
+            timerSave_Tick(sender, e);
+
             saveFileDialogSettings.FileName = FILE_LOCATION;
 
             if (saveFileDialogSettings.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 FILE_LOCATION = Path.GetFullPath(saveFileDialogSettings.FileName);
+                if(File.Exists(FILE_LOCATION))
+                {
+                    settings = new Settings(FILE_LOCATION);
+                    this.Form1_Load(sender, e);
+                }
             }
+            
+            timerSave_Tick(sender, e);
+            timerSave.Enabled = true;
+            timerWorking.Enabled = true;
         }
 
         private void addCommonTaskToolStripMenuItem_Click(object sender, EventArgs e)
