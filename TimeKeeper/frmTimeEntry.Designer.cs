@@ -52,7 +52,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(239, 91);
+            this.btnOK.Location = new System.Drawing.Point(340, 143);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 7;
@@ -63,7 +63,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(320, 91);
+            this.btnCancel.Location = new System.Drawing.Point(421, 143);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 8;
@@ -91,7 +91,7 @@
             // comboTask
             // 
             this.comboTask.FormattingEnabled = true;
-            this.comboTask.Location = new System.Drawing.Point(276, 12);
+            this.comboTask.Location = new System.Drawing.Point(269, 12);
             this.comboTask.Name = "comboTask";
             this.comboTask.Size = new System.Drawing.Size(146, 21);
             this.comboTask.TabIndex = 1;
@@ -100,7 +100,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(236, 15);
+            this.label2.Location = new System.Drawing.Point(229, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(34, 13);
             this.label2.TabIndex = 4;
@@ -109,7 +109,7 @@
             // comboEmployer
             // 
             this.comboEmployer.FormattingEnabled = true;
-            this.comboEmployer.Location = new System.Drawing.Point(501, 12);
+            this.comboEmployer.Location = new System.Drawing.Point(480, 12);
             this.comboEmployer.Name = "comboEmployer";
             this.comboEmployer.Size = new System.Drawing.Size(146, 21);
             this.comboEmployer.TabIndex = 2;
@@ -118,7 +118,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(442, 15);
+            this.label3.Location = new System.Drawing.Point(421, 15);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 13);
             this.label3.TabIndex = 6;
@@ -128,16 +128,16 @@
             // 
             this.dateTimePickerStart.CustomFormat = "hh:mm tt dddd MMMM dd, yyyy";
             this.dateTimePickerStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStart.Location = new System.Drawing.Point(77, 65);
+            this.dateTimePickerStart.Location = new System.Drawing.Point(77, 117);
             this.dateTimePickerStart.Name = "dateTimePickerStart";
-            this.dateTimePickerStart.Size = new System.Drawing.Size(260, 20);
+            this.dateTimePickerStart.Size = new System.Drawing.Size(338, 20);
             this.dateTimePickerStart.TabIndex = 5;
             this.dateTimePickerStart.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(41, 71);
+            this.label4.Location = new System.Drawing.Point(41, 123);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 9;
@@ -146,7 +146,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(349, 71);
+            this.label5.Location = new System.Drawing.Point(421, 123);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(32, 13);
             this.label5.TabIndex = 11;
@@ -156,9 +156,9 @@
             // 
             this.dateTimePickerStop.CustomFormat = "hh:mm tt dddd MMMM dd, yyyy";
             this.dateTimePickerStop.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerStop.Location = new System.Drawing.Point(387, 65);
+            this.dateTimePickerStop.Location = new System.Drawing.Point(459, 117);
             this.dateTimePickerStop.Name = "dateTimePickerStop";
-            this.dateTimePickerStop.Size = new System.Drawing.Size(244, 20);
+            this.dateTimePickerStop.Size = new System.Drawing.Size(351, 20);
             this.dateTimePickerStop.TabIndex = 6;
             this.dateTimePickerStop.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
@@ -168,14 +168,14 @@
             this.txtComments.Location = new System.Drawing.Point(77, 39);
             this.txtComments.Multiline = true;
             this.txtComments.Name = "txtComments";
-            this.txtComments.Size = new System.Drawing.Size(345, 20);
+            this.txtComments.Size = new System.Drawing.Size(760, 72);
             this.txtComments.TabIndex = 3;
             this.txtComments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 42);
+            this.label6.Location = new System.Drawing.Point(12, 39);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(59, 13);
             this.label6.TabIndex = 13;
@@ -184,7 +184,7 @@
             // comboJiraTask
             // 
             this.comboJiraTask.FormattingEnabled = true;
-            this.comboJiraTask.Location = new System.Drawing.Point(501, 39);
+            this.comboJiraTask.Location = new System.Drawing.Point(691, 12);
             this.comboJiraTask.Name = "comboJiraTask";
             this.comboJiraTask.Size = new System.Drawing.Size(146, 21);
             this.comboJiraTask.TabIndex = 4;
@@ -193,7 +193,7 @@
             // lblJiraTask
             // 
             this.lblJiraTask.AutoSize = true;
-            this.lblJiraTask.Location = new System.Drawing.Point(442, 42);
+            this.lblJiraTask.Location = new System.Drawing.Point(632, 15);
             this.lblJiraTask.Name = "lblJiraTask";
             this.lblJiraTask.Size = new System.Drawing.Size(53, 13);
             this.lblJiraTask.TabIndex = 15;
@@ -202,7 +202,7 @@
             // btnStartAtLast
             // 
             this.btnStartAtLast.Image = global::TimeKeeper.Properties.Resources.go_first;
-            this.btnStartAtLast.Location = new System.Drawing.Point(15, 65);
+            this.btnStartAtLast.Location = new System.Drawing.Point(15, 117);
             this.btnStartAtLast.Name = "btnStartAtLast";
             this.btnStartAtLast.Size = new System.Drawing.Size(20, 20);
             this.btnStartAtLast.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -213,7 +213,7 @@
             // btnStopAtNow
             // 
             this.btnStopAtNow.Image = global::TimeKeeper.Properties.Resources.go_first;
-            this.btnStopAtNow.Location = new System.Drawing.Point(637, 65);
+            this.btnStopAtNow.Location = new System.Drawing.Point(816, 117);
             this.btnStopAtNow.Name = "btnStopAtNow";
             this.btnStopAtNow.Size = new System.Drawing.Size(20, 20);
             this.btnStopAtNow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -226,7 +226,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(663, 125);
+            this.ClientSize = new System.Drawing.Size(848, 174);
             this.ControlBox = false;
             this.Controls.Add(this.btnStopAtNow);
             this.Controls.Add(this.btnStartAtLast);
