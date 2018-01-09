@@ -859,7 +859,7 @@ namespace TimeKeeper
         {
             this.showHideToolStripMenuItem_Click(sender, e);
         }
-
+        frmWorking stillWorking;
         private void timerWorking_Tick(object sender, EventArgs e)
         {
             //If there is not an active task and there is an already closed task which includes 'NOW', then don't ask about working.
@@ -871,11 +871,11 @@ namespace TimeKeeper
 
             timerWorking.Enabled = false;
 
-            frmWorking stillWorking = new frmWorking();
+            stillWorking = new frmWorking();
             
             notifyIcon1.ShowBalloonTip(10000, "Working Check", "Are you still working/not working?", ToolTipIcon.Info);
 
-            if (stillWorking.ShowDialog() == System.Windows.Forms.DialogResult.No)
+            if (stillWorking.ShowDialog(this) == System.Windows.Forms.DialogResult.No)
             {
                 CloseCurrentTask();
                 if (!stillWorking.FinishedWorking)
@@ -1011,6 +1011,8 @@ namespace TimeKeeper
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             SetWindowFocus();
+            WindowManipulation.BringForwardWindow(stillWorking.Text);
+            stillWorking.Focus();
         }
     }
 }
