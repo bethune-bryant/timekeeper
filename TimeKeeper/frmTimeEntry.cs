@@ -137,7 +137,14 @@ namespace TimeKeeper
 
         private void btnStartAtLast_Click(object sender, EventArgs e)
         {
-            this.dateTimePickerStart.Value = frmMain.settings.LastClosedTask.Stop;
+            try
+            {
+                this.dateTimePickerStart.Value = frmMain.settings.LastClosedTask.Stop;
+            }
+            catch
+            {
+                this.dateTimePickerStart.Value = DateTime.Now;
+            }
         }
 
         private void btnStopAtNow_Click(object sender, EventArgs e)
