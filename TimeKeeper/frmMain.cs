@@ -16,6 +16,7 @@ namespace TimeKeeper
 {
     public partial class frmMain : Form
     {
+        bool startMinimized = false;
 
         static string FILE_LOCATION
         {
@@ -41,7 +42,7 @@ namespace TimeKeeper
 
         static globalKeyboardHook KeyboardHook = new globalKeyboardHook();
 
-        public frmMain()
+        public frmMain(bool startMinimized)
         {
             InitializeComponent();
 
@@ -49,7 +50,11 @@ namespace TimeKeeper
             KeyboardHook.HookedKeys.Add(Keys.A);
             KeyboardHook.HookedKeys.Add(Keys.S);
             KeyboardHook.KeyUp += KeyboardHook_KeyUp;
+
+            this.startMinimized = startMinimized;
         }
+
+        public frmMain() : this(false) { }
 
         static Keys pressed;
 
@@ -70,6 +75,15 @@ namespace TimeKeeper
             timerSave.Enabled = true;
             timerWorking.Interval = settings.StillWorkingTime * 60 * 1000;
             timerWorking.Enabled = true;
+        }
+
+        private void frmMain_Shown(object sender, EventArgs e)
+        {
+            if (startMinimized)
+            {
+                showHideToolStripMenuItem_Click(sender, e);
+                startMinimized = false;
+            }
         }
 
         public static List<string> Projects
