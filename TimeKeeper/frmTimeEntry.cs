@@ -69,15 +69,15 @@ namespace TimeKeeper
 
         private void frmTimeEntry_Load(object sender, EventArgs e)
         {
-            comboProject.Items.AddRange(frmMain.Projects.ToArray());
+            comboProject.Items.AddRange(CurrentSettings.Projects.ToArray());
             if (comboProject.Text.Trim().Length == 0 && comboProject.Items.Count > 0)
                 comboProject.SelectedItem = comboProject.Items[0];
 
-            comboTask.Items.AddRange(frmMain.Tasks.ToArray()); 
+            comboTask.Items.AddRange(CurrentSettings.Tasks.ToArray()); 
             if (comboTask.Text.Trim().Length == 0 && comboTask.Items.Count > 0)
                 comboTask.SelectedItem = comboTask.Items[0];
 
-            comboEmployer.Items.AddRange(frmMain.Employers.ToArray());
+            comboEmployer.Items.AddRange(CurrentSettings.Employers.ToArray());
             if (comboEmployer.Text.Trim().Length == 0 && comboEmployer.Items.Count > 0)
                 comboEmployer.SelectedItem = comboEmployer.Items[0];
 
@@ -132,7 +132,7 @@ namespace TimeKeeper
                 return false;
             }
             /*
-            if(frmMain.settings.TimeEntries.Where(entry => (dateTimePickerStart.Value >= entry.Start && dateTimePickerStart.Value < entry.Stop) ||
+            if(CurrentSettings.settings.TimeEntries.Where(entry => (dateTimePickerStart.Value >= entry.Start && dateTimePickerStart.Value < entry.Stop) ||
                                                            (dateTimePickerStop.Value != TimeEntry.MIN_DATE && 
                                                                ((dateTimePickerStop.Value > entry.Start && dateTimePickerStop.Value < entry.Stop) ||
                                                                 (entry.Start >= dateTimePickerStart.Value && entry.Start < dateTimePickerStop.Value) ||
@@ -150,7 +150,7 @@ namespace TimeKeeper
         {
             try
             {
-                this.dateTimePickerStart.Value = frmMain.settings.LastClosedTask.Stop;
+                this.dateTimePickerStart.Value = CurrentSettings.settings.LastClosedTask.Stop;
             }
             catch
             {

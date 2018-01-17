@@ -12,6 +12,105 @@ using GlobalKeyboardHook;
 
 namespace TimeKeeper
 {
+
+    public static class CurrentSettings
+    {
+        public static Settings settings { get; set; }
+
+        public static List<string> Projects
+        {
+            get
+            {
+                return settings.TimeEntries.Select(entry => entry.Project)
+                                                   .Distinct()
+                                                   .ToList();
+            }
+        }
+
+        public static List<string> ProjectsFor(string Employer)
+        {
+            return settings.TimeEntries.Where(entry => entry.Employer == Employer)
+                                               .Select(entry => entry.Project)
+                                               .Distinct()
+                                               .ToList();
+        }
+
+        public static List<string> Tasks
+        {
+            get
+            {
+                return settings.TimeEntries.Select(entry => entry.Task)
+                                                   .Distinct()
+                                                   .ToList();
+            }
+        }
+
+        public static List<string> MonthEmployers(DateTime Month)
+        {
+            return settings.TimeEntries.Where(entry => entry.Start.Month == Month.Month && entry.Start.Year == Month.Year)
+                                               .Select(entry => entry.Employer)
+                                               .Distinct()
+                                               .ToList();
+        }
+
+        public static List<string> Employers
+        {
+            get
+            {
+                return settings.TimeEntries.Select(entry => entry.Employer)
+                                                   .Distinct()
+                                                   .ToList();
+            }
+        }
+
+        public static List<DateTime> RecordedMonths
+        {
+            get
+            {
+                return settings.TimeEntries.Select(item => new DateTime(item.Start.Year, item.Start.Month, 1)).Distinct().ToList();
+            }
+        }
+
+        public static string MonthSummary(DateTime Month)
+        {
+            string retval = "";
+
+            foreach (string employer in MonthEmployers(Month))
+            {
+                retval += employer + " " + Math.Max(Math.Round(MonthTime(Month, employer).TotalHours, 2), 0).ToString() + " | ";
+            }
+
+            retval = retval.Remove(retval.Length - 3);
+
+            return retval;
+        }
+
+        public static TimeSpan TodayTime(string employer)
+        {
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && item.Start.Day == DateTime.Now.Day && item.Start.Month == DateTime.Now.Month && item.Start.Year == DateTime.Now.Year));
+        }
+
+        public static TimeSpan MonthTime(DateTime Month, string employer)
+        {
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && (new DateTime(item.Start.Year, item.Start.Month, 1)) == Month));
+        }
+
+        public static TimeSpan ThisMonthTime(string employer)
+        {
+            return MonthTime(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), employer);
+        }
+
+        public static TimeSpan ThisWeekTime(string employer)
+        {
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now) && item.Start.Year == DateTime.Now.Year));
+        }
+
+        public static TimeSpan LastWeekTime(string employer)
+        {
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now.AddDays(-7)) && item.Start.Year == DateTime.Now.AddDays(-7).Year));
+        }
+    }
+
     [Serializable]
     public class Settings
     {
@@ -155,5 +254,4 @@ namespace TimeKeeper
             }
         }
     }
-
 }

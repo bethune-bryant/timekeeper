@@ -24,7 +24,7 @@ namespace TimeKeeper
                 {
                     TimeSpan total = new TimeSpan(0);
 
-                    foreach (TimeEntry entry in frmMain.settings.TimeEntries.Where(e => e.Start.Date == day.Date && e.Project == inputEntry.Project && e.Task == inputEntry.Task && e.Employer == inputEntry.Employer))
+                    foreach (TimeEntry entry in CurrentSettings.settings.TimeEntries.Where(e => e.Start.Date == day.Date && e.Project == inputEntry.Project && e.Task == inputEntry.Task && e.Employer == inputEntry.Employer))
                     {
                         total += (entry.Stop - entry.Start);
                     }
@@ -100,9 +100,9 @@ namespace TimeKeeper
 
             timeEntries.Add("Project,Task,Venue,Date,Start,Stop,\"=\"\"Comments  (Month to date: \"\"&ROUND(SUM($K:$K),2)&\"\")\"\"\",Time,H+MM,Gap,DailyTime,=P5,Also Exclude:");
 
-            frmMain.settings.TimeEntries.Reverse();
+            CurrentSettings.settings.TimeEntries.Reverse();
 
-            foreach (TimeEntry entry in frmMain.settings.TimeEntries.Where(item => item.Employer == employer && item.Start >= since && item.Stop <= until && item.Stop != TimeEntry.MIN_DATE))
+            foreach (TimeEntry entry in CurrentSettings.settings.TimeEntries.Where(item => item.Employer == employer && item.Start >= since && item.Stop <= until && item.Stop != TimeEntry.MIN_DATE))
             {
                 string timeEnrty;
 
@@ -125,7 +125,7 @@ namespace TimeKeeper
                 timeEntries.Add(timeEnrty + "," + Quote(time) + "," + Quote(hmm) + "," + Quote(gap) + "," + Quote(dailyTime));
             }
 
-            frmMain.settings.TimeEntries.Reverse();
+            CurrentSettings.settings.TimeEntries.Reverse();
 
             string dailyHours = "=" + DailyHours;
             string yesterdaysHours = "=" + YesterdaysHours;
@@ -139,7 +139,7 @@ namespace TimeKeeper
             totalsChart.Add("Total" + tableRow);
             totalsChart.Add(",Today,Yesterday,Weekly,Monthly");
 
-            foreach (string project in frmMain.ProjectsFor(employer))
+            foreach (string project in CurrentSettings.ProjectsFor(employer))
             {
                 totalsChart.Add(project + tableRow);
             }
