@@ -259,7 +259,7 @@ namespace TimeKeeper
 
         private void RefreshEntries()
         {
-            int temp = dataThisWeek.FirstDisplayedScrollingRowIndex;
+            int scrollingIndex = dataThisWeek.FirstDisplayedScrollingRowIndex;
             int selected;
             try
             {
@@ -269,6 +269,10 @@ namespace TimeKeeper
             {
                 selected = 0;
             }
+
+            int sortedColumn = dataThisWeek.SortedColumn is null ? 5 : dataThisWeek.SortedColumn.Index;
+            SortOrder sortedOrder = dataThisWeek.SortedColumn is null ? SortOrder.Descending : dataThisWeek.SortOrder;
+            
 
             settings.TimeEntries.Sort();
             settings.TimeEntries.Reverse();
@@ -377,7 +381,8 @@ namespace TimeKeeper
 
             try
             {
-                dataThisWeek.FirstDisplayedScrollingRowIndex = temp;
+                dataThisWeek.Sort(dataThisWeek.Columns[sortedColumn], sortedOrder == SortOrder.Descending ? ListSortDirection.Descending : ListSortDirection.Ascending);
+                dataThisWeek.FirstDisplayedScrollingRowIndex = scrollingIndex;
                 dataThisWeek.Rows[selected].Selected = true;
                 //dataLastWeek.FirstDisplayedScrollingRowIndex = temp;
                 //dataLastWeek.Rows[selected].Selected = true;
@@ -387,6 +392,29 @@ namespace TimeKeeper
             catch
             {
 
+            }
+
+            ColorGaps();
+        }
+
+        private void ColorGaps()
+        {
+            List<TimeEntry> tocolor = new List<TimeEntry>();
+            for (int i = 1; i < settings.TimeEntries.Count; i++)
+            {
+                if (Math.Abs((settings.TimeEntries[i - 1].Start - settings.TimeEntries[i].Stop).TotalMinutes) > 1 &&
+                    settings.TimeEntries[i].Stop.Hour < 16)
+                {
+                    tocolor.Add(settings.TimeEntries[i]);
+                }
+            }
+
+            foreach (DataGridViewRow row in dataThisWeek.Rows)
+            {
+                if (tocolor.Contains(new TimeEntry(row.Cells[0].Value.ToString(), row.Cells[1].Value.ToString(), row.Cells[2].Value.ToString(), (DateTime)row.Cells[5].Value, (DateTime)row.Cells[6].Value, row.Cells[7].Value.ToString(), (JiraInfo)row.Cells[8].Value)))
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightYellow;
+                }
             }
         }
 
@@ -949,7 +977,7 @@ namespace TimeKeeper
                 for (DateTime day = dayChooser.SelectedDates.Start; day <= dayChooser.SelectedDates.End; day = day.AddDays(1))
                 {
                     AddTimeEntry(new TimeEntry(task.Project, task.Task, task.Employer, new DateTime(day.Year, day.Month, day.Day, task.Start.Hour, task.Start.Minute, 0),
-                                                            new DateTime(day.Year, day.Month, day.Day, task.Stop.Hour, task.Stop.Minute, 0), ""));
+                                                            new DateTime(day.Year, day.Month, day.Day, task.Stop.Hour, task.Stop.Minute, 0), task.Comments));
                 }
                 RefreshEntries();
             }
@@ -1025,8 +1053,14 @@ namespace TimeKeeper
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             SetWindowFocus();
-            WindowManipulation.BringForwardWindow(stillWorking.Text);
-            stillWorking.Focus();
+            try
+            {
+                WindowManipulation.BringForwardWindow(stillWorking.Text);
+                stillWorking.Focus();
+            }catch
+            {
+
+            }
         }
     }
 }
