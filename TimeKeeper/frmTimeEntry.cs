@@ -32,8 +32,8 @@ namespace TimeKeeper
             this.comboProject.Text = input.Project;
             this.comboTask.Text = input.Task;
             this.comboEmployer.Text = input.Employer;
-            this.dateTimePickerStart.Value = input.Start;
-            this.dateTimePickerStop.Value = input.Stop;
+            this.dateTimePickerStart.Value = new DateTime(input.Start.Year, input.Start.Month, input.Start.Day, input.Start.Hour, input.Start.Minute, 0);
+            this.dateTimePickerStop.Value = new DateTime(input.Stop.Year, input.Stop.Month, input.Stop.Day, input.Stop.Hour, input.Stop.Minute, 0);
             this.txtComments.Text = input.Comments;
             this.workLog = input.WorkLog;
             this.comboJiraTask.Text = input.WorkLog.TaskID;
@@ -49,18 +49,18 @@ namespace TimeKeeper
                 {
                     this.workLog = new JiraInfo(comboJiraTask.Text);
                 }
-                return new TimeEntry(this.comboProject.Text.Trim(), this.comboTask.Text.Trim(), 
-                                     this.comboEmployer.Text.Trim(), this.dateTimePickerStart.Value,
-                                     this.dateTimePickerStop.Value, this.txtComments.Text.Trim(),
-                                     this.workLog);
+                return new TimeEntry(this.comboProject.Text.Trim(), this.comboTask.Text.Trim(), this.comboEmployer.Text.Trim(),
+                                     new DateTime(this.dateTimePickerStart.Value.Year, this.dateTimePickerStart.Value.Month, this.dateTimePickerStart.Value.Day, this.dateTimePickerStart.Value.Hour, this.dateTimePickerStart.Value.Minute, 0),
+                                     new DateTime(this.dateTimePickerStop.Value.Year, this.dateTimePickerStop.Value.Month, this.dateTimePickerStop.Value.Day, this.dateTimePickerStop.Value.Hour, this.dateTimePickerStop.Value.Minute, 0), 
+                                     this.txtComments.Text.Trim(), this.workLog);
             }
             set
             {
                 this.comboProject.Text = value.Project;
                 this.comboTask.Text = value.Task;
                 this.comboEmployer.Text = value.Employer;
-                this.dateTimePickerStart.Value = value.Start;
-                this.dateTimePickerStop.Value = value.Stop;
+                this.dateTimePickerStart.Value = new DateTime(value.Start.Year, value.Start.Month, value.Start.Day, value.Start.Hour, value.Start.Minute, 0);
+                this.dateTimePickerStop.Value = new DateTime(value.Stop.Year, value.Stop.Month, value.Stop.Day, value.Stop.Hour, value.Stop.Minute, 0);
                 this.txtComments.Text = value.Comments;
                 this.workLog = value.WorkLog;
                 this.comboJiraTask.Text = value.WorkLog.TaskID;
@@ -131,7 +131,18 @@ namespace TimeKeeper
 
                 return false;
             }
-            
+            /*
+            if(frmMain.settings.TimeEntries.Where(entry => (dateTimePickerStart.Value >= entry.Start && dateTimePickerStart.Value < entry.Stop) ||
+                                                           (dateTimePickerStop.Value != TimeEntry.MIN_DATE && 
+                                                               ((dateTimePickerStop.Value > entry.Start && dateTimePickerStop.Value < entry.Stop) ||
+                                                                (entry.Start >= dateTimePickerStart.Value && entry.Start < dateTimePickerStop.Value) ||
+                                                                (entry.Stop > dateTimePickerStart.Value && entry.Stop < dateTimePickerStop.Value)))).Count() > 0)
+            {
+                MessageBox.Show("Tasks cannot overlap with each other.", "Error: Task Overlap!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+            */
             return true;
         }
 
