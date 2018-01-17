@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace TimeKeeper
 {
-    class Utilities
+    public class Utilities
     {
         private static RegistryKey baseRegistryKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default);
         private static string subKey = "SOFTWARE\\bethune-bryant\\Timekeeper";

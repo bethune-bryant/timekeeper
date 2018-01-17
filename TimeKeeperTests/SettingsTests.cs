@@ -42,7 +42,7 @@ namespace TimeKeeper.Tests
             Assert.AreEqual(0, test.TimeEntries.Count);
             Assert.AreEqual(15, test.StillWorkingTime);
         }
-        
+
         [TestMethod()]
         public void LastUnclosedTaskTest()
         {
