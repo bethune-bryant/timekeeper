@@ -99,6 +99,14 @@ namespace TimeKeeper
                 }
             }
         }
+        
+        public object AsRow
+        {
+            get
+            {
+                return new { this.Project, this.Task, this.Employer, this.Start.DayOfWeek, TaskTime = Utilities.ElapsedTimeString(this.Start, this.Stop), this.Start, this.Stop, this.Comments, JiraID = this.WorkLog };
+            }
+        }
 
         #region Overrides
 

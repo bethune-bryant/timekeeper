@@ -15,6 +15,27 @@ namespace TimeKeeper
     [Serializable]
     public class Settings
     {
+        [System.Xml.Serialization.XmlIgnore]
+        public static string FILE_LOCATION
+        {
+            get
+            {
+                string retval = Utilities.ReadFromRegistry("settingsfile").Trim();
+                if (retval.Length <= 0)
+                {
+                    return "settings.tkf";
+                }
+                else
+                {
+                    return retval;
+                }
+            }
+            set
+            {
+                Utilities.WriteToRegistry("settingsfile", value);
+            }
+        }
+
         public List<TimeEntry> TimeEntries { get; set; }
 
         public List<TimeEntry> CommonTasks { get; set; }

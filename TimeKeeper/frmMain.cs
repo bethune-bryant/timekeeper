@@ -18,29 +18,9 @@ namespace TimeKeeper
     {
         bool startMinimized = false;
 
-        static string FILE_LOCATION
-        {
-            get
-            {
-                string retval = Utilities.ReadFromRegistry("settingsfile").Trim();
-                if (retval.Length <= 0)
-                {
-                    return "settings.tkf";
-                }
-                else
-                {
-                    return retval;
-                }
-            }
-            set
-            {
-                Utilities.WriteToRegistry("settingsfile", value);
-            }
-        }
+        public static Settings settings = new Settings(Settings.FILE_LOCATION);
 
-        public static Settings settings = new Settings(FILE_LOCATION);
-
-        static globalKeyboardHook KeyboardHook = new globalKeyboardHook();
+        #region Constructors
 
         public frmMain(bool startMinimized)
         {
@@ -56,6 +36,12 @@ namespace TimeKeeper
 
         public frmMain() : this(false) { }
 
+        #endregion
+
+        #region KeyboardHooks
+
+        static globalKeyboardHook KeyboardHook = new globalKeyboardHook();
+
         static Keys pressed;
 
         void KeyboardHook_KeyUp(object sender, KeyEventArgs e)
@@ -68,7 +54,29 @@ namespace TimeKeeper
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void timerKeyHooks_Tick(object sender, EventArgs e)
+        {
+            timerKeyHooks.Enabled = false;
+            SetWindowFocus();
+            if (pressed == Keys.C)
+            {
+                closeToolStripMenuItem_Click(sender, e);
+            }
+            else if (pressed == Keys.A)
+            {
+                addToolStripMenuItem_Click(sender, e);
+            }
+            else if (pressed == Keys.S)
+            {
+                showHideToolStripMenuItem_Click(sender, e);
+            }
+        }
+
+        #endregion
+
+        #region frmMain Events
+
+        private void frmMain_Load(object sender, EventArgs e)
         {
             RefreshEntries();
             RefreshCommonTasks();
@@ -86,119 +94,59 @@ namespace TimeKeeper
             }
         }
 
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            File.WriteAllText(Settings.FILE_LOCATION, settings.ToString());
+        }
+
+        #endregion
+
+        #region Summaries
+
         public static List<string> Projects
         {
             get
             {
-                return frmMain.settings.TimeEntries.Select(entry => entry.Project).Distinct().ToList();
+                return frmMain.settings.TimeEntries.Select(entry => entry.Project)
+                                                   .Distinct()
+                                                   .ToList();
             }
         }
 
         public static List<string> ProjectsFor(string Employer)
         {
-            return frmMain.settings.TimeEntries.Where(entry => entry.Employer == Employer).Select(entry => entry.Project).Distinct().ToList();
+            return frmMain.settings.TimeEntries.Where(entry => entry.Employer == Employer)
+                                               .Select(entry => entry.Project)
+                                               .Distinct()
+                                               .ToList();
         }
 
         public static List<string> Tasks
         {
             get
             {
-                return frmMain.settings.TimeEntries.Select(entry => entry.Task).Distinct().ToList();
+                return frmMain.settings.TimeEntries.Select(entry => entry.Task)
+                                                   .Distinct()
+                                                   .ToList();
             }
         }
 
         public static List<string> MonthEmployers(DateTime Month)
         {
-            return frmMain.settings.TimeEntries.Where(entry => entry.Start.Month == Month.Month && entry.Start.Year == Month.Year).Select(entry => entry.Employer).Distinct().ToList();
+            return frmMain.settings.TimeEntries.Where(entry => entry.Start.Month == Month.Month && entry.Start.Year == Month.Year)
+                                               .Select(entry => entry.Employer)
+                                               .Distinct()
+                                               .ToList();
         }
 
         public static List<string> Employers
         {
             get
             {
-                return frmMain.settings.TimeEntries.Select(entry => entry.Employer).Distinct().ToList();
+                return frmMain.settings.TimeEntries.Select(entry => entry.Employer)
+                                                   .Distinct()
+                                                   .ToList();
             }
-        }
-
-        private static TimeSpan TodayTime(string employer)
-        {
-            TimeSpan retval = new TimeSpan(0);
-
-            foreach (TimeEntry entry in settings.TimeEntries.Where(item => item.Employer == employer && item.Start.Day == DateTime.Now.Day && item.Start.Month == DateTime.Now.Month && item.Start.Year == DateTime.Now.Year))
-            {
-                if (entry.Stop == TimeEntry.MIN_DATE)
-                {
-                    retval += DateTime.Now - entry.Start;
-                }
-                else
-                {
-                    retval += entry.Stop - entry.Start;
-                }
-            }
-
-            return retval;
-        }
-
-        private static TimeSpan MonthTime(DateTime Month, string employer)
-        {
-            TimeSpan retval = new TimeSpan(0);
-
-            foreach (TimeEntry entry in settings.TimeEntries.Where(item => item.Employer == employer && (new DateTime(item.Start.Year, item.Start.Month, 1)) == Month))
-            {
-                if (entry.Stop == TimeEntry.MIN_DATE)
-                {
-                    retval += DateTime.Now - entry.Start;
-                }
-                else
-                {
-                    retval += entry.Stop - entry.Start;
-                }
-            }
-
-            return retval;
-        }
-
-        private static TimeSpan ThisMonthTime(string employer)
-        {
-            return MonthTime(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), employer);
-        }
-
-        private static TimeSpan ThisWeekTime(string employer)
-        {
-            TimeSpan retval = new TimeSpan(0);
-
-            foreach (TimeEntry entry in settings.TimeEntries.Where(item => item.Employer == employer && GetWeek(item.Start) == GetWeek(DateTime.Now) && item.Start.Year == DateTime.Now.Year))
-            {
-                if (entry.Stop == TimeEntry.MIN_DATE)
-                {
-                    retval += DateTime.Now - entry.Start;
-                }
-                else
-                {
-                    retval += entry.Stop - entry.Start;
-                }
-            }
-
-            return retval;
-        }
-
-        private static TimeSpan LastWeekTime(string employer)
-        {
-            TimeSpan retval = new TimeSpan(0);
-
-            foreach (TimeEntry entry in settings.TimeEntries.Where(item => item.Employer == employer && GetWeek(item.Start) == GetWeek(DateTime.Now.AddDays(-7)) && item.Start.Year == DateTime.Now.AddDays(-7).Year))
-            {
-                if (entry.Stop == TimeEntry.MIN_DATE)
-                {
-                    retval += DateTime.Now - entry.Start;
-                }
-                else
-                {
-                    retval += entry.Stop - entry.Start;
-                }
-            }
-
-            return retval;
         }
 
         private List<DateTime> RecordedMonths
@@ -223,15 +171,38 @@ namespace TimeKeeper
             return retval;
         }
 
-        private string ElapsedTimeString(DateTime start, DateTime stop)
+        #endregion
+
+        #region Times
+
+        private static TimeSpan TodayTime(string employer)
         {
-            return new TimeSpan(0, 0, (int)Math.Round((stop - start).Duration().TotalMinutes), 0).ToString("hh\\:mm");
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && item.Start.Day == DateTime.Now.Day && item.Start.Month == DateTime.Now.Month && item.Start.Year == DateTime.Now.Year));
         }
 
-        private object TimeEntryToRow(TimeEntry entry)
+        private static TimeSpan MonthTime(DateTime Month, string employer)
         {
-            return new { entry.Project, entry.Task, entry.Employer, entry.Start.DayOfWeek, TaskTime = ElapsedTimeString(entry.Start, entry.Stop), entry.Start, entry.Stop, entry.Comments, JiraID = entry.WorkLog };
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && (new DateTime(item.Start.Year, item.Start.Month, 1)) == Month));
         }
+
+        private static TimeSpan ThisMonthTime(string employer)
+        {
+            return MonthTime(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), employer);
+        }
+
+        private static TimeSpan ThisWeekTime(string employer)
+        {
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now) && item.Start.Year == DateTime.Now.Year));
+        }
+
+        private static TimeSpan LastWeekTime(string employer)
+        {
+            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now.AddDays(-7)) && item.Start.Year == DateTime.Now.AddDays(-7).Year));
+        }
+
+        #endregion
+        
+        #region RefreshEntries
 
         private void RefreshPreviousEntries()
         {
@@ -252,7 +223,7 @@ namespace TimeKeeper
                 newGV.CellDoubleClick += dataPrevious_CellDoubleClick;
                 newGV.KeyUp += dataPrevious_KeyUp;
                 newGV.DataSource = new SortableBinding.SortableBindingList<Object>(settings.TimeEntries.Where(entry => (new DateTime(entry.Start.Year, entry.Start.Month, 1)) == recordedMonth)
-                                                                                                       .Select(TimeEntryToRow)
+                                                                                                       .Select(x => x.AsRow)
                                                                                                        .ToList());
             }
         }
@@ -293,7 +264,7 @@ namespace TimeKeeper
                 recentTasksToolStripMenuItem1.DropDownItems.Add(menu);
 
                 menu = new ToolStripMenuItem(recent.ToString());
-                menu.Click += (s, e) => ReportDailyTask(recent);
+                menu.Click += (s, e) => Reports.ReportDailyTask(recent, saveFileDialogReport);
                 dailyTaskReportToolStripMenuItem.DropDownItems.Add(menu);
             }
 
@@ -373,9 +344,9 @@ namespace TimeKeeper
 
             lblStatus.Text = lblStatus.Text.Remove(lblStatus.Text.Length - 3);
 
-            dataThisWeek.DataSource = new SortableBinding.SortableBindingList<Object>(settings.TimeEntries.Where(entry => GetWeek(entry.Start) == GetWeek(DateTime.Now) && entry.Start.Year == DateTime.Now.Year).Select(TimeEntryToRow).ToList());
-            dataLastWeek.DataSource = new SortableBinding.SortableBindingList<Object>(settings.TimeEntries.Where(entry => GetWeek(entry.Start) == GetWeek(DateTime.Now.AddDays(-7)) && entry.Start.Year == DateTime.Now.AddDays(-7).Year).Select(TimeEntryToRow).ToList());
-            //dataPrevious.DataSource = new SortableBinding.SortableBindingList<Object>(settings.TimeEntries.Where(entry => GetWeek(entry.Start) < GetWeek(DateTime.Now.AddDays(-7)) || entry.Start.Year < DateTime.Now.AddDays(-7).Year).Select(entry => new { entry.Project, entry.Task, entry.Employer, entry.Start.DayOfWeek, entry.Start, entry.Stop, entry.Comments }).ToList());
+            dataThisWeek.DataSource = new SortableBinding.SortableBindingList<Object>(settings.TimeEntries.Where(entry => Utilities.GetWeek(entry.Start) == Utilities.GetWeek(DateTime.Now) && entry.Start.Year == DateTime.Now.Year).Select(x => x.AsRow).ToList());
+            dataLastWeek.DataSource = new SortableBinding.SortableBindingList<Object>(settings.TimeEntries.Where(entry => Utilities.GetWeek(entry.Start) == Utilities.GetWeek(DateTime.Now.AddDays(-7)) && entry.Start.Year == DateTime.Now.AddDays(-7).Year).Select(x => x.AsRow).ToList());
+            //dataPrevious.DataSource = new SortableBinding.SortableBindingList<Object>(settings.TimeEntries.Where(entry => Utilities.GetWeek(entry.Start) < Utilities.GetWeek(DateTime.Now.AddDays(-7)) || entry.Start.Year < DateTime.Now.AddDays(-7).Year).Select(entry => new { entry.Project, entry.Task, entry.Employer, entry.Start.DayOfWeek, entry.Start, entry.Stop, entry.Comments }).ToList());
 
             RefreshPreviousEntries();
 
@@ -417,6 +388,8 @@ namespace TimeKeeper
                 }
             }
         }
+
+        #endregion
 
         private void StartNewTask(TimeEntry entry)
         {
@@ -486,11 +459,6 @@ namespace TimeKeeper
                 return false;
             }
             return true;
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            File.WriteAllText(FILE_LOCATION, settings.ToString());
         }
 
         private void dataEntries_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -591,24 +559,6 @@ namespace TimeKeeper
             CloseCurrentTask();
         }
 
-        private void timerKeyHooks_Tick(object sender, EventArgs e)
-        {
-            timerKeyHooks.Enabled = false;
-            SetWindowFocus();
-            if (pressed == Keys.C)
-            {
-                closeToolStripMenuItem_Click(sender, e);
-            }
-            else if (pressed == Keys.A)
-            {
-                addToolStripMenuItem_Click(sender, e);
-            }
-            else if (pressed == Keys.S)
-            {
-                showHideToolStripMenuItem_Click(sender, e);
-            }
-        }
-
         private void SetWindowFocus()
         {
             WindowManipulation.BringForwardWindow(this.Text);
@@ -628,6 +578,25 @@ namespace TimeKeeper
             }
         }
 
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            this.showHideToolStripMenuItem_Click(sender, e);
+        }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        {
+            SetWindowFocus();
+            try
+            {
+                WindowManipulation.BringForwardWindow(stillWorking.Text);
+                stillWorking.Focus();
+            }
+            catch
+            {
+
+            }
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -636,198 +605,21 @@ namespace TimeKeeper
         private void timerSave_Tick(object sender, EventArgs e)
         {
             string toSave = settings.ToString();
-            if (!File.Exists(FILE_LOCATION))
+            if (!File.Exists(Settings.FILE_LOCATION))
             {
-                File.WriteAllText(FILE_LOCATION, toSave);
+                File.WriteAllText(Settings.FILE_LOCATION, toSave);
             }
-            else if (File.ReadAllText(FILE_LOCATION).Trim() != toSave.Trim())
+            else if (File.ReadAllText(Settings.FILE_LOCATION).Trim() != toSave.Trim())
             {
-                File.WriteAllText(FILE_LOCATION, toSave);
+                File.WriteAllText(Settings.FILE_LOCATION, toSave);
             }
         }
 
         #region Reporting
-
-        private void ReportDailyTask(TimeEntry inputEntry)
-        {
-            frmChooseDay chooser = new frmChooseDay();
-            chooser.Title = "Select Days to Include in the Report";
-            chooser.SelectionCount = 100;
-
-            if (chooser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                StringBuilder result = new StringBuilder();
-
-                for (DateTime day = chooser.SelectedDates.Start; day <= chooser.SelectedDates.End; day = day.AddDays(1))
-                {
-                    TimeSpan total = new TimeSpan(0);
-
-                    foreach (TimeEntry entry in settings.TimeEntries.Where(e => e.Start.Date == day.Date && e.Project == inputEntry.Project && e.Task == inputEntry.Task && e.Employer == inputEntry.Employer))
-                    {
-                        total += (entry.Stop - entry.Start);
-                    }
-                    if (total.TotalHours > 0)
-                    {
-                        result.AppendLine(day.Date.ToString("d-MMM") + "," + Math.Round(total.TotalHours, 2).ToString());
-                    }
-                }
-
-                if (saveFileDialogReport.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    try
-                    {
-                        File.WriteAllText(saveFileDialogReport.FileName, result.ToString());
-                        System.Diagnostics.Process.Start(saveFileDialogReport.FileName);
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-        }
-
-        private static string Dub(string col)
-        {
-            return "INDIRECT(\"\"" + col + ":" + col + "\"\")";
-        }
-
-        private static string Dub0(string col)
-        {
-            return "INDIRECT(\"\"" + col + "\"\"&ROW())";
-        }
-
-        private static string Dub1(string col)
-        {
-            return "INDIRECT(\"\"" + col + "\"\"&ROW()-1)";
-        }
-
-        private static string Interval = "IF(ISBLANK(" + Dub0("F") + "),NOW()-" + Dub0("D") + "," + Dub0("F") + ")-" + Dub0("E") + "";
-        private static string Time = "IF(ISBLANK(" + Dub0("A") + "),0,ROUND(24*(" + Interval + "+IF(" + Interval + "<0,1,0)),2))";
-        private static string HMM = "IF(" + Time + "<=0,\"\"\"\",INT(" + Time + ")&\"\"+\"\"&TEXT(ROUND((" + Time + "-INT(" + Time + "))*60,0),\"\"00\"\"))";
-        private static string TransitionTime = "ROUND(24*(" + Dub0("E") + "-" + Dub1("F") + "+IF(" + Dub0("E") + "-" + Dub1("F") + "<0,1,0)),2)";
-        private static string TTime_HMM = "INT(" + TransitionTime + ")&\"\"+\"\"&TEXT(ROUND((" + TransitionTime + "-INT(" + TransitionTime + "))*60,0),\"\"00\"\")";
-        private static string Gap = "IF(" + Dub0("D") + "=" + Dub1("D") + ",IF(" + Dub0("E") + ">" + Dub1("F") + "," + TTime_HMM + ",IF(" + Dub0("E") + "<" + Dub1("F") + ",\"\"OVERBILL\"\",\"\"\"\")),\"\"\"\")";
-        private static string Exclude = "$N$1";
-        private static string DailyTime = "IF(" + Dub0("D") + "=" + Dub1("D") + ",\"\"\"\",SUMIFS($H:$H,$D:$D,\"\"=\"\"&" + Dub0("D") + ",$A:$A,\"\"<>Personal\"\",$A:$A,\"\"<>\"\"&" + Exclude + "))";
-
-        private static string DayStart = "MAX(" + Dub("A") + ")";
-        private static string YesterdayStart = DayStart + " - 1";
-        private static string WeekStartsOn = "$O$4";
-        private static string WeekStart = "MAX(" + Dub("D") + ")-MOD(WEEKDAY(MAX(" + Dub("D") + "))-MATCH(" + WeekStartsOn + ",{\"\"Sun\"\",\"\"Mon\"\",\"\"Tue\"\",\"\"Wed\"\",\"\"Thu\"\",\"\"Fri\"\",\"\"Sat\"\"},0),7)";
-        private static string MonthStart = "DATE(YEAR(MAX(" + Dub("D") + ")),MONTH(MAX(" + Dub("D") + ")),1)";
-        private static string Label2 = "LEFT(" + Dub0("M") + ",IF(ISERROR(FIND(\"\":\"\"," + Dub0("M") + ")),LEN(" + Dub0("M") + "),FIND(\"\":\"\"," + Dub0("M") + ")-1))";
-        private static string DailyHours = "SUMIFS(" + Dub("H") + "," + Dub("D") + ",\"\">=\"\"&" + DayStart + "," + Dub("A") + ",IF(" + Label2 + "=\"\"Total\"\",\"\">_\"\"," + Label2 + "))";
-        private static string YesterdaysHours = "SUMIFS(" + Dub("H") + "," + Dub("D") + ",\"\">=\"\"&" + YesterdayStart + "," + Dub("D") + ",\"\"<\"\"&" + DayStart + "," + Dub("A") + ",IF(" + Label2 + "=\"\"Total\"\",\"\">_\"\"," + Label2 + "))";
-        private static string WeeklyHours = "SUMIFS(" + Dub("H") + "," + Dub("D") + ",\"\">=\"\"&" + WeekStart + "," + Dub("A") + ",IF(" + Label2 + "=\"\"Total\"\",\"\">_\"\"," + Label2 + "))";
-        private static string MonthlyHours = "SUMIFS(" + Dub("H") + "," + Dub("D") + ",\"\">=\"\"&" + MonthStart + "," + Dub("A") + ",IF(" + Label2 + "=\"\"Total\"\",\"\">_\"\"," + Label2 + "))";
-
-        private void Export(string employer)
-        {
-            Export(employer, DateTime.MinValue);
-        }
-
-        private void Export(string employer, DateTime since)
-        {
-            Export(employer, since, DateTime.Now);
-        }
-
-        private void Export(string employer, DateTime since, DateTime until)
-        {
-            List<string> timeEntries = new List<string>();
-
-            timeEntries.Add("Project,Task,Venue,Date,Start,Stop,\"=\"\"Comments  (Month to date: \"\"&ROUND(SUM($K:$K),2)&\"\")\"\"\",Time,H+MM,Gap,DailyTime,=P5,Also Exclude:");
-
-            settings.TimeEntries.Reverse();
-
-            foreach (TimeEntry entry in settings.TimeEntries.Where(item => item.Employer == employer && item.Start >= since && item.Stop <= until && item.Stop != TimeEntry.MIN_DATE))
-            {
-                string timeEnrty;
-
-                if (entry.Stop != TimeEntry.MIN_DATE)
-                {
-                    timeEnrty = Quote(entry.Project) + "," + Quote(entry.Task) + ",," + Quote(entry.Start.Date.ToString("d-MMM")) + "," +
-                                  Quote(entry.Start.ToString("hh:mm tt")) + "," + Quote(entry.Stop.ToString("hh:mm tt")) + "," + Quote(entry.Comments);
-                }
-                else
-                {
-                    timeEnrty = Quote(entry.Project) + "," + Quote(entry.Task) + ",," + Quote(entry.Start.Date.ToString("d-MMM")) + "," +
-                                  Quote(entry.Start.ToString("hh:mm tt")) + ",," + Quote(entry.Comments);
-                }
-
-                string time = "=" + Time;
-                string hmm = "=" + HMM;
-                string gap = "=" + Gap;
-                string dailyTime = "=" + DailyTime;
-
-                timeEntries.Add(timeEnrty + "," + Quote(time) + "," + Quote(hmm) + "," + Quote(gap) + "," + Quote(dailyTime));
-            }
-
-            settings.TimeEntries.Reverse();
-
-            string dailyHours = "=" + DailyHours;
-            string yesterdaysHours = "=" + YesterdaysHours;
-            string weeksHours = "=" + WeeklyHours;
-            string monthsHours = "=" + MonthlyHours;
-
-            string tableRow = "," + Quote(dailyHours) + "," + Quote(yesterdaysHours) + "," + Quote(weeksHours) + "," + Quote(monthsHours) + "";
-
-            List<string> totalsChart = new List<string>();
-            totalsChart.Add(",Week Starts on:,Sat");
-            totalsChart.Add("Total" + tableRow);
-            totalsChart.Add(",Today,Yesterday,Weekly,Monthly");
-
-            foreach (string project in ProjectsFor(employer))
-            {
-                totalsChart.Add(project + tableRow);
-            }
-
-            for (int i = 0; i < 4 - timeEntries.Count; i++)
-            {
-                timeEntries.Add("");
-            }
-
-            for (int i = 0; i < totalsChart.Count; i++)
-            {
-                if (timeEntries.Count > (i + 3))
-                {
-                    timeEntries[i + 3] += ",," + totalsChart[i];
-                }
-                else
-                {
-                    timeEntries.Add(",,,,,,,,,,,," + totalsChart[i]);
-                }
-            }
-
-            StringBuilder result = new StringBuilder();
-
-            foreach (string line in timeEntries)
-            {
-                result.AppendLine(line);
-            }
-
-            if (saveFileDialogReport.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                try
-                {
-                    File.WriteAllText(saveFileDialogReport.FileName, result.ToString());
-                    System.Diagnostics.Process.Start(saveFileDialogReport.FileName);
-                }
-                catch (Exception exc)
-                {
-                    MessageBox.Show(exc.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private string Quote(string input)
-        {
-            return "\"" + input + "\"";
-        }
-
+        
         private void reportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Export((sender as ToolStripMenuItem).Text);
+            Reports.Export((sender as ToolStripMenuItem).Text, saveFileDialogReport);
         }
 
         private void weeklyReportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -839,7 +631,7 @@ namespace TimeKeeper
                 weekStart = weekStart.AddDays(-1);
             }
 
-            Export((sender as ToolStripMenuItem).Text, weekStart);
+            Reports.Export((sender as ToolStripMenuItem).Text, weekStart, saveFileDialogReport);
         }
 
         private void lastWeeklyReportToolStripMenuItem_Click(object sender, EventArgs e)
@@ -860,7 +652,7 @@ namespace TimeKeeper
                 weekStart = weekStart.AddDays(-1);
             }
 
-            Export((sender as ToolStripMenuItem).Text, weekStart, weekEnd);
+            Reports.Export((sender as ToolStripMenuItem).Text, weekStart, weekEnd, saveFileDialogReport);
         }
 
         private void monthlyEmployerReportsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -874,33 +666,12 @@ namespace TimeKeeper
 
                 DateTime monthEnd = monthStart.AddMonths(1).AddMilliseconds(-1);
 
-                Export((sender as ToolStripMenuItem).Text, monthStart, monthEnd);
+                Reports.Export((sender as ToolStripMenuItem).Text, monthStart, monthEnd, saveFileDialogReport);
             }
         }
 
         #endregion
 
-        // This presumes that weeks start with Monday.
-        // Week 1 is the 1st week of the year with a Thursday in it.
-        public static int GetWeek(DateTime time)
-        {
-            // Seriously cheat.  If its Monday, Tuesday or Wednesday, then it'll 
-            // be the same week# as whatever Thursday, Friday or Saturday are,
-            // and we always get those right
-            DayOfWeek day = CultureInfo.InvariantCulture.Calendar.GetDayOfWeek(time);
-            if (day >= DayOfWeek.Monday && day <= DayOfWeek.Wednesday)
-            {
-                time = time.AddDays(3);
-            }
-
-            // Return the week of our adjusted day
-            return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-        }
-
-        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
-        {
-            this.showHideToolStripMenuItem_Click(sender, e);
-        }
         frmWorking stillWorking;
         private void timerWorking_Tick(object sender, EventArgs e)
         {
@@ -949,15 +720,15 @@ namespace TimeKeeper
             timerWorking.Enabled = false;
             timerSave_Tick(sender, e);
 
-            saveFileDialogSettings.FileName = FILE_LOCATION;
+            saveFileDialogSettings.FileName = Settings.FILE_LOCATION;
 
             if (saveFileDialogSettings.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                FILE_LOCATION = Path.GetFullPath(saveFileDialogSettings.FileName);
-                if(File.Exists(FILE_LOCATION))
+                Settings.FILE_LOCATION = Path.GetFullPath(saveFileDialogSettings.FileName);
+                if(File.Exists(Settings.FILE_LOCATION))
                 {
-                    settings = new Settings(FILE_LOCATION);
-                    this.Form1_Load(sender, e);
+                    settings = new Settings(Settings.FILE_LOCATION);
+                    this.frmMain_Load(sender, e);
                 }
             }
             
@@ -965,6 +736,8 @@ namespace TimeKeeper
             timerSave.Enabled = true;
             timerWorking.Enabled = true;
         }
+
+        #region CommonTasks
 
         private void addCommonTaskToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1047,20 +820,8 @@ namespace TimeKeeper
                 editCommonTask.Tag = commonTask;
                 editACommonTaskToolStripMenuItem.DropDownItems.Add(editCommonTask);
             }
-
         }
 
-        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
-        {
-            SetWindowFocus();
-            try
-            {
-                WindowManipulation.BringForwardWindow(stillWorking.Text);
-                stillWorking.Focus();
-            }catch
-            {
-
-            }
-        }
+        #endregion
     }
 }
