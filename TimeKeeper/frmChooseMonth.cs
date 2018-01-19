@@ -19,8 +19,8 @@ namespace TimeKeeper
 
         private void frmChooseDay_Load(object sender, EventArgs e)
         {
-            this.dateTimePicker.MinDate = CurrentSettings.settings.TimeEntries.Select(entry => entry.Start).Min();
-            this.dateTimePicker.MaxDate = CurrentSettings.settings.TimeEntries.Select(entry => entry.Start).Max();
+            this.dateTimePicker.MinDate = Settings.CurrentSettings.TimeEntries.Select(entry => entry.Start).Min();
+            this.dateTimePicker.MaxDate = Settings.CurrentSettings.TimeEntries.Select(entry => entry.Start).Max();
             this.dateTimePicker.Value = this.dateTimePicker.MaxDate;
         }
 

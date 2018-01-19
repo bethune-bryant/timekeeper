@@ -161,5 +161,13 @@ namespace TimeKeeper
         }
 
         #endregion
+
+        public static List<string> ProjectsFor(string Employer, List<TimeEntry> TimeEntries)
+        {
+            return TimeEntries.Where(entry => entry.Employer == Employer)
+                              .Select(entry => entry.Project)
+                              .Distinct()
+                              .ToList();
+        }
     }
 }

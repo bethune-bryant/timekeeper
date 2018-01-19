@@ -10,7 +10,7 @@ namespace TimeKeeper
 {
     static class Reports
     {
-        public static void ReportDailyTask(TimeEntry inputEntry, SaveFileDialog saveFileDialogReport)
+        public static void ReportDailyTask(TimeEntry inputEntry, List<TimeEntry> TimeEntries, SaveFileDialog saveFileDialogReport)
         {
             frmChooseDay chooser = new frmChooseDay();
             chooser.Title = "Select Days to Include in the Report";
@@ -24,7 +24,7 @@ namespace TimeKeeper
                 {
                     TimeSpan total = new TimeSpan(0);
 
-                    foreach (TimeEntry entry in CurrentSettings.settings.TimeEntries.Where(e => e.Start.Date == day.Date && e.Project == inputEntry.Project && e.Task == inputEntry.Task && e.Employer == inputEntry.Employer))
+                    foreach (TimeEntry entry in TimeEntries.Where(e => e.Start.Date == day.Date && e.Project == inputEntry.Project && e.Task == inputEntry.Task && e.Employer == inputEntry.Employer))
                     {
                         total += (entry.Stop - entry.Start);
                     }
@@ -84,25 +84,25 @@ namespace TimeKeeper
         private static string WeeklyHours = "SUMIFS(" + Dub("H") + "," + Dub("D") + ",\"\">=\"\"&" + WeekStart + "," + Dub("A") + ",IF(" + Label2 + "=\"\"Total\"\",\"\">_\"\"," + Label2 + "))";
         private static string MonthlyHours = "SUMIFS(" + Dub("H") + "," + Dub("D") + ",\"\">=\"\"&" + MonthStart + "," + Dub("A") + ",IF(" + Label2 + "=\"\"Total\"\",\"\">_\"\"," + Label2 + "))";
 
-        public static void Export(string employer, SaveFileDialog saveFileDialogReport)
+        public static void Export(List<TimeEntry> TimeEntries, string employer, SaveFileDialog saveFileDialogReport)
         {
-            Export(employer, DateTime.MinValue, saveFileDialogReport);
+            Export(TimeEntries, employer, DateTime.MinValue, saveFileDialogReport);
         }
 
-        public static void Export(string employer, DateTime since, SaveFileDialog saveFileDialogReport)
+        public static void Export(List<TimeEntry> TimeEntries, string employer, DateTime since, SaveFileDialog saveFileDialogReport)
         {
-            Export(employer, since, DateTime.Now, saveFileDialogReport);
+            Export(TimeEntries, employer, since, DateTime.Now, saveFileDialogReport);
         }
 
-        public static void Export(string employer, DateTime since, DateTime until, SaveFileDialog saveFileDialogReport)
+        public static void Export(List<TimeEntry> TimeEntries, string employer, DateTime since, DateTime until, SaveFileDialog saveFileDialogReport)
         {
             List<string> timeEntries = new List<string>();
 
             timeEntries.Add("Project,Task,Venue,Date,Start,Stop,\"=\"\"Comments  (Month to date: \"\"&ROUND(SUM($K:$K),2)&\"\")\"\"\",Time,H+MM,Gap,DailyTime,=P5,Also Exclude:");
 
-            CurrentSettings.settings.TimeEntries.Reverse();
+            TimeEntries.Reverse();
 
-            foreach (TimeEntry entry in CurrentSettings.settings.TimeEntries.Where(item => item.Employer == employer && item.Start >= since && item.Stop <= until && item.Stop != TimeEntry.MIN_DATE))
+            foreach (TimeEntry entry in TimeEntries.Where(item => item.Employer == employer && item.Start >= since && item.Stop <= until && item.Stop != TimeEntry.MIN_DATE))
             {
                 string timeEnrty;
 
@@ -125,7 +125,7 @@ namespace TimeKeeper
                 timeEntries.Add(timeEnrty + "," + Quote(time) + "," + Quote(hmm) + "," + Quote(gap) + "," + Quote(dailyTime));
             }
 
-            CurrentSettings.settings.TimeEntries.Reverse();
+            TimeEntries.Reverse();
 
             string dailyHours = "=" + DailyHours;
             string yesterdaysHours = "=" + YesterdaysHours;
@@ -139,7 +139,7 @@ namespace TimeKeeper
             totalsChart.Add("Total" + tableRow);
             totalsChart.Add(",Today,Yesterday,Weekly,Monthly");
 
-            foreach (string project in CurrentSettings.ProjectsFor(employer))
+            foreach (string project in TimeEntry.ProjectsFor(employer, TimeEntries))
             {
                 totalsChart.Add(project + tableRow);
             }

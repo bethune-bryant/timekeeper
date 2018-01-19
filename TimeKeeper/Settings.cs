@@ -13,107 +13,12 @@ using GlobalKeyboardHook;
 namespace TimeKeeper
 {
 
-    public static class CurrentSettings
-    {
-        public static Settings settings { get; set; }
-
-        public static List<string> Projects
-        {
-            get
-            {
-                return settings.TimeEntries.Select(entry => entry.Project)
-                                                   .Distinct()
-                                                   .ToList();
-            }
-        }
-
-        public static List<string> ProjectsFor(string Employer)
-        {
-            return settings.TimeEntries.Where(entry => entry.Employer == Employer)
-                                               .Select(entry => entry.Project)
-                                               .Distinct()
-                                               .ToList();
-        }
-
-        public static List<string> Tasks
-        {
-            get
-            {
-                return settings.TimeEntries.Select(entry => entry.Task)
-                                                   .Distinct()
-                                                   .ToList();
-            }
-        }
-
-        public static List<string> MonthEmployers(DateTime Month)
-        {
-            return settings.TimeEntries.Where(entry => entry.Start.Month == Month.Month && entry.Start.Year == Month.Year)
-                                               .Select(entry => entry.Employer)
-                                               .Distinct()
-                                               .ToList();
-        }
-
-        public static List<string> Employers
-        {
-            get
-            {
-                return settings.TimeEntries.Select(entry => entry.Employer)
-                                                   .Distinct()
-                                                   .ToList();
-            }
-        }
-
-        public static List<DateTime> RecordedMonths
-        {
-            get
-            {
-                return settings.TimeEntries.Select(item => new DateTime(item.Start.Year, item.Start.Month, 1)).Distinct().ToList();
-            }
-        }
-
-        public static string MonthSummary(DateTime Month)
-        {
-            string retval = "";
-
-            foreach (string employer in MonthEmployers(Month))
-            {
-                retval += employer + " " + Math.Max(Math.Round(MonthTime(Month, employer).TotalHours, 2), 0).ToString() + " | ";
-            }
-
-            retval = retval.Remove(retval.Length - 3);
-
-            return retval;
-        }
-
-        public static TimeSpan TodayTime(string employer)
-        {
-            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && item.Start.Day == DateTime.Now.Day && item.Start.Month == DateTime.Now.Month && item.Start.Year == DateTime.Now.Year));
-        }
-
-        public static TimeSpan MonthTime(DateTime Month, string employer)
-        {
-            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && (new DateTime(item.Start.Year, item.Start.Month, 1)) == Month));
-        }
-
-        public static TimeSpan ThisMonthTime(string employer)
-        {
-            return MonthTime(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), employer);
-        }
-
-        public static TimeSpan ThisWeekTime(string employer)
-        {
-            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now) && item.Start.Year == DateTime.Now.Year));
-        }
-
-        public static TimeSpan LastWeekTime(string employer)
-        {
-            return Utilities.GetTime(settings.TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now.AddDays(-7)) && item.Start.Year == DateTime.Now.AddDays(-7).Year));
-        }
-    }
-
     [Serializable]
     public class Settings
     {
+        [System.Xml.Serialization.XmlIgnore]
+        public static Settings CurrentSettings { get; set; }
+
         [System.Xml.Serialization.XmlIgnore]
         public static string FILE_LOCATION
         {
@@ -252,6 +157,95 @@ namespace TimeKeeper
                                        .Select(entry => new TimeEntry(entry.Project, entry.Task, entry.Employer, entry.Start, entry.Stop, entry.Comments))
                                        .First();
             }
+        }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public List<string> Projects
+        {
+            get
+            {
+                return TimeEntries.Select(entry => entry.Project)
+                                                   .Distinct()
+                                                   .ToList();
+            }
+        }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public List<string> Tasks
+        {
+            get
+            {
+                return TimeEntries.Select(entry => entry.Task)
+                                           .Distinct()
+                                           .ToList();
+            }
+        }
+
+        public List<string> MonthEmployers(DateTime Month)
+        {
+            return TimeEntries.Where(entry => entry.Start.Month == Month.Month && entry.Start.Year == Month.Year)
+                                               .Select(entry => entry.Employer)
+                                               .Distinct()
+                                               .ToList();
+        }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public List<string> Employers
+        {
+            get
+            {
+                return TimeEntries.Select(entry => entry.Employer)
+                                                   .Distinct()
+                                                   .ToList();
+            }
+        }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public List<DateTime> RecordedMonths
+        {
+            get
+            {
+                return TimeEntries.Select(item => new DateTime(item.Start.Year, item.Start.Month, 1)).Distinct().ToList();
+            }
+        }
+
+        public string MonthSummary(DateTime Month)
+        {
+            string retval = "";
+
+            foreach (string employer in MonthEmployers(Month))
+            {
+                retval += employer + " " + Math.Max(Math.Round(MonthTime(Month, employer).TotalHours, 2), 0).ToString() + " | ";
+            }
+
+            retval = retval.Remove(retval.Length - 3);
+
+            return retval;
+        }
+
+        public TimeSpan TodayTime(string employer)
+        {
+            return Utilities.GetTime(TimeEntries.Where(item => item.Employer == employer && item.Start.Day == DateTime.Now.Day && item.Start.Month == DateTime.Now.Month && item.Start.Year == DateTime.Now.Year));
+        }
+
+        public TimeSpan MonthTime(DateTime Month, string employer)
+        {
+            return Utilities.GetTime(TimeEntries.Where(item => item.Employer == employer && (new DateTime(item.Start.Year, item.Start.Month, 1)) == Month));
+        }
+
+        public TimeSpan ThisMonthTime(string employer)
+        {
+            return MonthTime(new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1), employer);
+        }
+
+        public TimeSpan ThisWeekTime(string employer)
+        {
+            return Utilities.GetTime(TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now) && item.Start.Year == DateTime.Now.Year));
+        }
+
+        public TimeSpan LastWeekTime(string employer)
+        {
+            return Utilities.GetTime(TimeEntries.Where(item => item.Employer == employer && Utilities.GetWeek(item.Start) == Utilities.GetWeek(DateTime.Now.AddDays(-7)) && item.Start.Year == DateTime.Now.AddDays(-7).Year));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace TimeKeeper
 
         private void frmWorking_Load(object sender, EventArgs e)
         {
-            if (object.ReferenceEquals(CurrentSettings.settings.LastUnclosedTask, null))
+            if (object.ReferenceEquals(Settings.CurrentSettings.LastUnclosedTask, null))
             {
                 this.radioYes.Text = "Yes, I'm still not working on anything.";
                 this.Text = "Still not working";
@@ -28,18 +28,18 @@ namespace TimeKeeper
             }
             else
             {
-                this.radioYes.Text = "Yes, I'm still working on \"" + CurrentSettings.settings.LastUnclosedTask.ToString() + "\"";
+                this.radioYes.Text = "Yes, I'm still working on \"" + Settings.CurrentSettings.LastUnclosedTask.ToString() + "\"";
             }
 
             comboNew.Items.Add("New Task");
 
-            foreach (TimeEntry recent in CurrentSettings.settings.RecentTasks)
+            foreach (TimeEntry recent in Settings.CurrentSettings.RecentTasks)
             {
                 comboNew.Items.Add(recent);
             }
 
             comboNew.SelectedIndex = 0;
-            numAskAgain.Value = CurrentSettings.settings.StillWorkingTime;
+            numAskAgain.Value = Settings.CurrentSettings.StillWorkingTime;
             this.radioYes.Checked = true;
         }
 
@@ -87,7 +87,7 @@ namespace TimeKeeper
                 DialogResult = System.Windows.Forms.DialogResult.No;
             }
 
-            CurrentSettings.settings.StillWorkingTime = (int)this.numAskAgain.Value;
+            Settings.CurrentSettings.StillWorkingTime = (int)this.numAskAgain.Value;
 
             this.Close();
         }
