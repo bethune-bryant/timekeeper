@@ -592,7 +592,6 @@ namespace TimeKeeper
 
             if (stillWorking.ShowDialog(this) == System.Windows.Forms.DialogResult.No)
             {
-                CloseCurrentTask();
                 if (!stillWorking.FinishedWorking)
                 {
                     TimeEntry newEntry = stillWorking.NewTask;
@@ -601,6 +600,9 @@ namespace TimeKeeper
                     {
                         StartNewTask(newEntry);
                     }
+                }else
+                {
+                    Tuple<bool, DateTime> closeResult = CloseCurrentTask();
                 }
             }
 
