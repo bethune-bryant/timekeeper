@@ -44,48 +44,9 @@ namespace TimeKeeper
 
     static class JiraInterface
     {
-        public static string JiraURL
-        {
-            get
-            {
-                try { return Utilities.ReadFromRegistry("jiraurl"); }
-                catch { return ""; }
-            }
-            set
-            {
-                Utilities.WriteToRegistry("jiraurl", value);
-            }
-        }
-
-        public static string Username
-        {
-            get
-            {
-                try { return Utilities.ReadFromRegistry("jirausername"); }
-                catch { return ""; }
-            }
-            set
-            {
-                Utilities.WriteToRegistry("jirausername", value);
-            }
-        }
-
-        public static string Password
-        {
-            get
-            {
-                try { return Encryption.Decrypt(Utilities.ReadFromRegistry("jirapassword")); }
-                catch { return ""; }
-            }
-            set
-            {
-                Utilities.WriteToRegistry("jirapassword", Encryption.Encrypt(value));
-            }
-        }
-
         private static dynamic RunQuery(string Query, string User, string Pass)
         {
-            string URL = JiraURL + Query;
+            string URL = Settings.CurrentSettings.JiraURL + Query;
 
             string urlParameters = ""; // "?api_key=123";
             HttpClient client = new HttpClient();
@@ -121,7 +82,7 @@ namespace TimeKeeper
 
         private static void RunPostQuery(string Query, string PostData, string User, string Pass)
         {
-            string URL = JiraURL + Query;
+            string URL = Settings.CurrentSettings.JiraURL + Query;
 
             string urlParameters = ""; // "?api_key=123";
             HttpClient client = new HttpClient();
@@ -159,7 +120,7 @@ namespace TimeKeeper
 
         private static void RunPutQuery(string Query, string PostData, string User, string Pass)
         {
-            string URL = JiraURL + Query;
+            string URL = Settings.CurrentSettings.JiraURL + Query;
 
             string urlParameters = ""; // "?api_key=123";
             HttpClient client = new HttpClient();
@@ -197,7 +158,7 @@ namespace TimeKeeper
 
         private static void RunDeleteQuery(string Query, string User, string Pass)
         {
-            string URL = JiraURL + Query;
+            string URL = Settings.CurrentSettings.JiraURL + Query;
 
             string urlParameters = ""; // "?api_key=123";
             HttpClient client = new HttpClient();
@@ -233,7 +194,7 @@ namespace TimeKeeper
 
         public static JiraInfo GetJiraInfo(string taskID)
         {
-            dynamic queryResult = RunQuery("/issue/" + taskID, Username, Password);
+            dynamic queryResult = RunQuery("/issue/" + taskID, Settings.CurrentSettings.JiraUsername, Settings.CurrentSettings.JiraPassword);
 
             return new JiraInfo(taskID, queryResult.fields.summary.ToString(), queryResult.fields.description.ToString());
         }
@@ -251,7 +212,7 @@ namespace TimeKeeper
 
             try
             {
-                dynamic queryResult = RunQuery("/search?jql=project+%3D+TD+AND+status+in+(Open%2C+\"In+Progress\"%2C+Reopened)+AND+assignee+in+(currentUser())&tempMax=1000", Username, Password);
+                dynamic queryResult = RunQuery("/search?jql=project+%3D+TD+AND+status+in+(Open%2C+\"In+Progress\"%2C+Reopened)+AND+assignee+in+(currentUser())&tempMax=1000", Settings.CurrentSettings.JiraUsername, Settings.CurrentSettings.JiraPassword);
 
                 int total = queryResult.total;
 
@@ -292,7 +253,7 @@ namespace TimeKeeper
         {
             List<string> retval = new List<string>();
 
-            dynamic queryResult = RunQuery("/issue/" + taskID + "/worklog", Username, Password);
+            dynamic queryResult = RunQuery("/issue/" + taskID + "/worklog", Settings.CurrentSettings.JiraUsername, Settings.CurrentSettings.JiraPassword);
 
             int total = queryResult.total;
 
@@ -332,18 +293,18 @@ namespace TimeKeeper
         private static void AddWorkLog(string taskID, DateTime started, DateTime stopped)
         {
             string postData = WorkLogToJSON(started, stopped);
-            RunPostQuery("/issue/" + taskID + "/worklog", postData, Username, Password);
+            RunPostQuery("/issue/" + taskID + "/worklog", postData, Settings.CurrentSettings.JiraUsername, Settings.CurrentSettings.JiraPassword);
         }
 
         private static void UpdateWorkLog(string taskID, string workLogID, DateTime started, DateTime stopped)
         {
             string putData = WorkLogToJSON(started, stopped);
-            RunPutQuery("/issue/" + taskID + "/worklog/" + workLogID, putData, Username, Password);
+            RunPutQuery("/issue/" + taskID + "/worklog/" + workLogID, putData, Settings.CurrentSettings.JiraUsername, Settings.CurrentSettings.JiraPassword);
         }
 
         public static void DeleteWorkLog(string taskID, string workLogID)
         {
-            RunDeleteQuery("/issue/" + taskID + "/worklog/" + workLogID, Username, Password);
+            RunDeleteQuery("/issue/" + taskID + "/worklog/" + workLogID, Settings.CurrentSettings.JiraUsername, Settings.CurrentSettings.JiraPassword);
         }
     }
 }

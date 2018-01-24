@@ -46,6 +46,26 @@ namespace TimeKeeper
 
         public int StillWorkingTime { get; set; }
 
+        public string JiraURL { get; set; }
+
+        public string JiraUsername { get; set; }
+
+        public string EncryptedJiraPassword { get; set; }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public string JiraPassword
+        {
+            get
+            {
+                try { return Encryption.Decrypt(this.EncryptedJiraPassword); }
+                catch { return ""; }
+            }
+            set
+            {
+                this.EncryptedJiraPassword = Encryption.Encrypt(value);
+            }
+        }
+
         public override string ToString()
         {
             System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(this.GetType());
@@ -68,6 +88,9 @@ namespace TimeKeeper
             this.TimeEntries = new List<TimeEntry>();
             this.CommonTasks = new List<TimeEntry>();
             this.StillWorkingTime = 15;
+            this.JiraURL = "";
+            this.JiraUsername = "";
+            this.JiraPassword = "";
         }
 
         public Settings(string FileName)
@@ -91,6 +114,9 @@ namespace TimeKeeper
                 this.TimeEntries = setting.TimeEntries;
                 this.CommonTasks = setting.CommonTasks;
                 this.StillWorkingTime = setting.StillWorkingTime;
+                this.JiraURL = setting.JiraURL;
+                this.JiraPassword = setting.JiraPassword;
+                this.JiraUsername = setting.JiraUsername;
             }
             catch (Exception exc)
             {
