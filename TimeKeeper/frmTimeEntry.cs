@@ -41,6 +41,18 @@ namespace TimeKeeper
             this.btnStopAtNow.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
         }
 
+        public DateTime Start
+        {
+            get
+            {
+                return this.dateTimePickerStart.Value;
+            }
+            set
+            {
+                this.dateTimePickerStart.Value = new DateTime(value.Year, value.Month, value.Day, value.Hour, value.Minute, 0);
+            }
+        }
+
         public TimeEntry Value
         {
             get

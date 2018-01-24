@@ -292,9 +292,10 @@ namespace TimeKeeper
 
         private void StartNewTask(TimeEntry entry)
         {
-            if (Settings.CurrentSettings.TimeEntries.Count == 0 || CloseCurrentTask())
+            Tuple<bool, DateTime> closeResult = CloseCurrentTask();
+            if (Settings.CurrentSettings.TimeEntries.Count == 0 || closeResult.Item1)
             {
-                Settings.CurrentSettings.TimeEntries.Add(new TimeEntry(entry.Project, entry.Task, entry.Employer));
+                Settings.CurrentSettings.TimeEntries.Add(new TimeEntry(entry.Project, entry.Task, entry.Employer, closeResult.Item2));
                 RefreshEntries();
                 notifyIcon1.ShowBalloonTip(5000, "Task Started", entry.ToString() + " Started", ToolTipIcon.Info);
             }
@@ -325,9 +326,11 @@ namespace TimeKeeper
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Settings.CurrentSettings.TimeEntries.Count == 0 || CloseCurrentTask())
+            Tuple<bool, DateTime> closeResult = CloseCurrentTask();
+            if (Settings.CurrentSettings.TimeEntries.Count == 0 || closeResult.Item1)
             {
                 frmTimeEntry form = new frmTimeEntry();
+                form.Start = closeResult.Item2;
                 form.Text = "Starting a new task...";
                 DialogResult result = form.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)
@@ -338,7 +341,7 @@ namespace TimeKeeper
             }
         }
 
-        private bool CloseCurrentTask()
+        private Tuple<bool, DateTime> CloseCurrentTask()
         {
             TimeEntry lastTask = Settings.CurrentSettings.LastUnclosedTask;
 
@@ -353,11 +356,11 @@ namespace TimeKeeper
                     Settings.CurrentSettings.TimeEntries.Remove(lastTask);
                     TimeEntry newValue = form.Value;
                     AddTimeEntry(newValue);
-                    return true;
+                    return new Tuple<bool, DateTime>(true, newValue.Stop);
                 }
-                return false;
+                return new Tuple<bool, DateTime>(false, DateTime.Now);
             }
-            return true;
+            return new Tuple<bool, DateTime>(true, DateTime.Now);
         }
 
         private void dataEntries_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
