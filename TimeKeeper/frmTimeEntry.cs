@@ -183,5 +183,13 @@ namespace TimeKeeper
                 e.Handled = true;
             }
         }
+
+        private void txtComments_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(!(e.Shift && e.KeyCode == Keys.Enter))
+            {
+                this.all_KeyUp(sender, e);
+            }
+        }
     }
 }

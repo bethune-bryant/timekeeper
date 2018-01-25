@@ -17,7 +17,23 @@ namespace TimeKeeper
 
         public DateTime Start { get; set; }
         public DateTime Stop { get; set; }
+
+        [System.Xml.Serialization.XmlIgnore]
         public string Comments { get; set; }
+
+        //Serialize the comments in binary to preserve \r\n's.
+        [System.Xml.Serialization.XmlElement(ElementName = "Comments", DataType = "base64Binary")]
+        public byte[] BinaryComments
+        {
+            get
+            {
+                return Encoding.Unicode.GetBytes(Comments);
+            }
+            set
+            {
+                Comments = Encoding.Unicode.GetString(value);
+            }
+        }
 
         public JiraInfo WorkLog { get; set; }
 

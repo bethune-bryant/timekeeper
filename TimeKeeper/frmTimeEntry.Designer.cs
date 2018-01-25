@@ -170,7 +170,7 @@
             this.txtComments.Name = "txtComments";
             this.txtComments.Size = new System.Drawing.Size(760, 72);
             this.txtComments.TabIndex = 3;
-            this.txtComments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
+            this.txtComments.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtComments_KeyUp);
             // 
             // label6
             // 
