@@ -76,6 +76,21 @@ namespace TimeKeeper
             }
         }
 
+        public string Comment
+        {
+            get
+            {
+                if (radioYes.Checked)
+                    return txtComment.Text.Trim();
+                else
+                    return "";
+            }
+            set
+            {
+                txtComment.Text = value.Trim();
+            }
+        }
+
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (radioYes.Checked)
@@ -104,6 +119,11 @@ namespace TimeKeeper
                 this.btnOk_Click(sender, e);
                 e.Handled = true;
             }
+        }
+
+        private void radioYes_CheckedChanged(object sender, EventArgs e)
+        {
+            txtComment.Enabled = radioYes.Checked;
         }
     }
 }

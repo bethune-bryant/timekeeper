@@ -605,6 +605,11 @@ namespace TimeKeeper
                     Tuple<bool, DateTime> closeResult = CloseCurrentTask();
                 }
             }
+            else
+            {
+                Settings.CurrentSettings.LastUnclosedTask.Comments = (Settings.CurrentSettings.LastUnclosedTask.Comments + Environment.NewLine + stillWorking.Comment).Trim();
+                RefreshEntries();
+            }
 
             timerWorking.Interval = Settings.CurrentSettings.StillWorkingTime * 60 * 1000;
 
