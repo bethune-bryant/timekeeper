@@ -152,6 +152,7 @@
             this.txtComment.Name = "txtComment";
             this.txtComment.Size = new System.Drawing.Size(190, 20);
             this.txtComment.TabIndex = 2;
+            this.txtComment.KeyUp += new System.Windows.Forms.KeyEventHandler(this.all_KeyUp);
             // 
             // lblComment
             // 
