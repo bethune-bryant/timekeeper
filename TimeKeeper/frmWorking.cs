@@ -25,10 +25,12 @@ namespace TimeKeeper
                 this.Text = "Still not working";
                 this.radioNo.Visible = false;
                 this.radioNo.Enabled = false;
+                this.AllowComment = false;
             }
             else
             {
                 this.radioYes.Text = "Yes, I'm still working on \"" + Settings.CurrentSettings.LastUnclosedTask.ToString() + "\"";
+                this.AllowComment = true;
             }
 
             comboNew.Items.Add("New Task");
@@ -48,6 +50,20 @@ namespace TimeKeeper
             get
             {
                 return radioNo.Checked;
+            }
+        }
+
+        private bool allowComment;
+        public bool AllowComment
+        {
+            get
+            {
+                return allowComment;
+            }
+            set
+            {
+                allowComment = value;
+                txtComment.Enabled = radioYes.Checked && AllowComment;
             }
         }
 
@@ -123,7 +139,7 @@ namespace TimeKeeper
 
         private void radioYes_CheckedChanged(object sender, EventArgs e)
         {
-            txtComment.Enabled = radioYes.Checked;
+            txtComment.Enabled = radioYes.Checked && AllowComment;
         }
     }
 }

@@ -607,8 +607,11 @@ namespace TimeKeeper
             }
             else
             {
-                Settings.CurrentSettings.LastUnclosedTask.Comments = (Settings.CurrentSettings.LastUnclosedTask.Comments + Environment.NewLine + stillWorking.Comment).Trim();
-                RefreshEntries();
+                if (Settings.CurrentSettings.LastUnclosedTask != null)
+                {
+                    Settings.CurrentSettings.LastUnclosedTask.Comments = (Settings.CurrentSettings.LastUnclosedTask.Comments + Environment.NewLine + stillWorking.Comment).Trim();
+                    RefreshEntries();
+                }
             }
 
             timerWorking.Interval = Settings.CurrentSettings.StillWorkingTime * 60 * 1000;
