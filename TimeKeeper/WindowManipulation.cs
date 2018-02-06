@@ -66,7 +66,7 @@ namespace TimeKeeper
             }
             catch (Exception exc)
             {
-                MessageBox.Show("Error:" + Environment.NewLine + exc.Message);
+                //MessageBox.Show("Error:" + Environment.NewLine + exc.Message);
                 return false;
             }
         }
