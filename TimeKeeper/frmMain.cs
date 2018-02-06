@@ -57,13 +57,14 @@ namespace TimeKeeper
         private void timerKeyHooks_Tick(object sender, EventArgs e)
         {
             timerKeyHooks.Enabled = false;
-            SetWindowFocus();
             if (pressed == Keys.C)
             {
+                SetWindowFocus();
                 closeToolStripMenuItem_Click(sender, e);
             }
             else if (pressed == Keys.A)
             {
+                SetWindowFocus();
                 addToolStripMenuItem_Click(sender, e);
             }
             else if (pressed == Keys.S)
@@ -461,9 +462,42 @@ namespace TimeKeeper
             CloseCurrentTask();
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == Utilities.NativeMethods.WM_SHOWME)
+            {
+                SetWindowFocus();
+            }
+            base.WndProc(ref m);
+        }
+
         private void SetWindowFocus()
         {
+            if(!this.Visible)
+            {
+                this.Show();
+            }
+
+            this.WindowState = FormWindowState.Normal;
+
+            // get our current "TopMost" value (ours will always be false though)
+            bool top = TopMost;
+            // make our form jump to the top of everything
+            TopMost = true;
+            // set it back to whatever it was
+            TopMost = top;
+
+
             WindowManipulation.BringForwardWindow(this.Text);
+            try
+            {
+                WindowManipulation.BringForwardWindow(stillWorking.Text);
+                stillWorking.Focus();
+            }
+            catch
+            {
+
+            }
         }
 
         private void showHideToolStripMenuItem_Click(object sender, EventArgs e)
@@ -474,9 +508,7 @@ namespace TimeKeeper
             }
             else
             {
-                this.Show();
                 SetWindowFocus();
-                this.WindowState = FormWindowState.Normal;
             }
         }
 
@@ -488,15 +520,6 @@ namespace TimeKeeper
         private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
         {
             SetWindowFocus();
-            try
-            {
-                WindowManipulation.BringForwardWindow(stillWorking.Text);
-                stillWorking.Focus();
-            }
-            catch
-            {
-
-            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
