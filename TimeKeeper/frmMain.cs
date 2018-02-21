@@ -17,6 +17,7 @@ namespace TimeKeeper
     public partial class frmMain : Form
     {
         bool startMinimized = false;
+        bool forceclose = false;
 
         #region Constructors
 
@@ -82,6 +83,7 @@ namespace TimeKeeper
             RefreshEntries();
             RefreshCommonTasks();
             timerSave.Enabled = true;
+            this.hideOnCloseToolStripMenuItem.Checked = Settings.CurrentSettings.HideOnClose;
             timerWorking.Interval = Settings.CurrentSettings.StillWorkingTime * 60 * 1000;
             timerWorking.Enabled = true;
         }
@@ -97,7 +99,16 @@ namespace TimeKeeper
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            File.WriteAllText(Settings.FILE_LOCATION, Settings.CurrentSettings.ToString());
+            if (forceclose || !Settings.CurrentSettings.HideOnClose)
+            {
+                File.WriteAllText(Settings.FILE_LOCATION, Settings.CurrentSettings.ToString());
+                return;
+            }
+            else
+            {
+                e.Cancel = true;
+                this.showHideToolStripMenuItem_Click(sender, e);
+            }
         }
 
         #endregion
@@ -527,6 +538,12 @@ namespace TimeKeeper
             this.Close();
         }
 
+        private void iconExitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            forceclose = true;
+            this.Close();
+        }
+
         private void timerSave_Tick(object sender, EventArgs e)
         {
             string toSave = Settings.CurrentSettings.ToString();
@@ -758,5 +775,11 @@ namespace TimeKeeper
         }
 
         #endregion
+
+        private void hideOnCloseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            hideOnCloseToolStripMenuItem.Checked = !hideOnCloseToolStripMenuItem.Checked;
+            Settings.CurrentSettings.HideOnClose = hideOnCloseToolStripMenuItem.Checked;
+        }
     }
 }

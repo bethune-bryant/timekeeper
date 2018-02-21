@@ -77,6 +77,8 @@
             this.tabPrevious = new System.Windows.Forms.TabControl();
             this.timerWorking = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialogSettings = new System.Windows.Forms.SaveFileDialog();
+            this.hideOnCloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataThisWeek)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -184,6 +186,8 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hideOnCloseToolStripMenuItem,
+            this.toolStripSeparator7,
             this.jiraLoginSettingsToolStripMenuItem,
             this.settingsFileLocationToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
@@ -337,32 +341,32 @@
             this.toolStripSeparator6,
             this.exitToolStripMenuItem1});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(142, 76);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 98);
             // 
             // showHideToolStripMenuItem
             // 
             this.showHideToolStripMenuItem.Name = "showHideToolStripMenuItem";
-            this.showHideToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.showHideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showHideToolStripMenuItem.Text = "Show/Hide";
             this.showHideToolStripMenuItem.Click += new System.EventHandler(this.showHideToolStripMenuItem_Click);
             // 
             // recentTasksToolStripMenuItem1
             // 
             this.recentTasksToolStripMenuItem1.Name = "recentTasksToolStripMenuItem1";
-            this.recentTasksToolStripMenuItem1.Size = new System.Drawing.Size(141, 22);
+            this.recentTasksToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.recentTasksToolStripMenuItem1.Text = "Recent Tasks";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(138, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem1
             // 
             this.exitToolStripMenuItem1.Name = "exitToolStripMenuItem1";
-            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(141, 22);
+            this.exitToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem1.Text = "Exit";
-            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem1.Click += new System.EventHandler(this.iconExitToolStripMenuItem_Click);
             // 
             // timerKeyHooks
             // 
@@ -484,6 +488,18 @@
             this.saveFileDialogSettings.FileName = "settings.tkf";
             this.saveFileDialogSettings.Filter = "Timekeeper Setting Files|*.tkf";
             // 
+            // hideOnCloseToolStripMenuItem
+            // 
+            this.hideOnCloseToolStripMenuItem.Name = "hideOnCloseToolStripMenuItem";
+            this.hideOnCloseToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.hideOnCloseToolStripMenuItem.Text = "Hide on Close";
+            this.hideOnCloseToolStripMenuItem.Click += new System.EventHandler(this.hideOnCloseToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(183, 6);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -571,6 +587,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem1;
         public System.Windows.Forms.SaveFileDialog saveFileDialogReport;
+        private System.Windows.Forms.ToolStripMenuItem hideOnCloseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }
 

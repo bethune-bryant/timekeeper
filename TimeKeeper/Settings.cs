@@ -40,6 +40,8 @@ namespace TimeKeeper
             }
         }
 
+        public bool HideOnClose { get; set; }
+
         public List<TimeEntry> TimeEntries { get; set; }
 
         public List<TimeEntry> CommonTasks { get; set; }
@@ -85,6 +87,7 @@ namespace TimeKeeper
 
         public Settings()
         {
+            this.HideOnClose = true;
             this.TimeEntries = new List<TimeEntry>();
             this.CommonTasks = new List<TimeEntry>();
             this.StillWorkingTime = 15;
@@ -111,6 +114,7 @@ namespace TimeKeeper
 
                 Settings setting = serializer.Deserialize(read) as Settings;
 
+                this.HideOnClose = setting.HideOnClose;
                 this.TimeEntries = setting.TimeEntries;
                 this.CommonTasks = setting.CommonTasks;
                 this.StillWorkingTime = setting.StillWorkingTime;
