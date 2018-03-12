@@ -99,7 +99,7 @@ namespace TimeKeeper
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (forceclose || !Settings.CurrentSettings.HideOnClose)
+            if (forceclose || !Settings.CurrentSettings.HideOnClose || e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.TaskManagerClosing)
             {
                 File.WriteAllText(Settings.FILE_LOCATION, Settings.CurrentSettings.ToString());
                 return;
